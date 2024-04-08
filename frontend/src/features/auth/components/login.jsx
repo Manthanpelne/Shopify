@@ -26,7 +26,7 @@ export const Login = () => {
                     </div>
                     <div className="relative">
                         <span className="block w-full h-px bg-gray-400"></span>
-                        <p className="inline-block w-fit bg-gray-100 text-sm px-2 absolute -top-2 inset-x-0 mx-auto">Login using</p>
+                        <p className="inline-block w-fit bg-white text-sm px-2 absolute -top-2 inset-x-0 mx-auto">Login using</p>
                     </div>
                     <div className="grid grid-cols-3 gap-x-3">
                         <button className="flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
@@ -71,7 +71,7 @@ export const Login = () => {
                     </div>
                     <div className="relative">
                         <span className="block w-full h-px bg-gray-500"></span>
-                        <p className="inline-block w-fit bg-gray-100 text-sm px-2 absolute -top-2 inset-x-0 mx-auto">Or continue with</p>
+                        <p className="inline-block w-fit bg-white text-sm px-2 absolute -top-2 inset-x-0 mx-auto">Or continue with</p>
                     </div>
                     <form
                         onSubmit={(e) => e.preventDefault()}

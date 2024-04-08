@@ -3,7 +3,7 @@ import SignUp from '../features/auth/components/signup'
 
 function SignupPage() {
   return (
-    <div>
+    <div className="bg-white"> 
       <SignUp/>
     </div>
   )

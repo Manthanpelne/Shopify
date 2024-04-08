@@ -63,8 +63,15 @@ const products = [
                                     <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
-
+                                    
+                                    <div className="text-gray-500">
+                                      <label htmlFor="quantity" className="inline mr-5">Quantity</label>
+                                    <select name="" id="">
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                    </select>
+                                    </div>
+                                   
                                     <div className="flex">
                                       <button
                                         type="button"

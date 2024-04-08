@@ -3,7 +3,7 @@ import { Login } from '../features/auth/components/login'
 
 function LoginPage() {
   return (
-    <div>
+    <div className="bg-white">
       <Login/>
     </div>
   )
