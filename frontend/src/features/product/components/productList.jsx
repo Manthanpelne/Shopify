@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchAllBrandsAsync,
+  fetchAllCategoriesAsync,
   fetchAllProductsAsync,
   fetchAllProductsByFiltersAsync,
+  selectAllBrands,
+  selectAllCategory,
   selectAllProducts,
   selectTotalItems,
 } from "../productListSlice";
@@ -32,39 +36,6 @@ const subCategories = [
   { name: "Laptop Sleeves", href: "#" },
 ];
 
-const filters = [
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "smartphones", label: "smartphones", checked: false },
-      { value: "laptops", label: "laptops", checked: false },
-      { value: "fragrances", label: "fragrances", checked: false },
-      { value: "groceries", label: "groceries", checked: false },
-      { value: "home-decoration", label: "home decoration", checked: false },
-    ],
-  },
-  {
-    id: "size",
-    name: "Size",
-    options: [
-      { value: "Apple", label: "Apple", checked: false },
-      { value: "OPPO", label: "OPPO", checked: false },
-    ],
-  },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -74,13 +45,40 @@ export const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const totalItems = useSelector(selectTotalItems)
- console.log(products,totalItems)
+  const brand = useSelector(selectAllBrands)
+  const category = useSelector(selectAllCategory)
+
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
 
-  const limit = 10;
+
+  const filters = [
+    {
+      id: "color",
+      name: "Color",
+      options: [
+        { value: "white", label: "White", checked: false },
+        { value: "beige", label: "Beige", checked: false },
+        { value: "blue", label: "Blue", checked: false },
+        { value: "brown", label: "Brown", checked: false },
+        { value: "green", label: "Green", checked: false },
+        { value: "purple", label: "Purple", checked: false },
+      ],
+    },
+    {
+      id: "category",
+      name: "Category",
+      options: category
+    },
+    {
+      id: "brand",
+      name: "Brands",
+      options:brand
+    },
+  ];
+  
 
   //filters----->
   const handleFilter = (e, section, option) => {
@@ -125,6 +123,12 @@ export const ProductList = () => {
    setPage(1)
   },[totalItems,sort])
 
+
+  useEffect(()=>{
+ dispatch(fetchAllBrandsAsync())
+ dispatch(fetchAllCategoriesAsync())
+  },[])
+
   return (
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="bg-white">
@@ -134,6 +138,7 @@ export const ProductList = () => {
             handleFilter={handleFilter}
             mobileFiltersOpen={mobileFiltersOpen}
             setMobileFiltersOpen={setMobileFiltersOpen}
+            filters={filters}
           />
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -213,7 +218,7 @@ export const ProductList = () => {
 
               <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                 {/* Filters */}
-                <DesktopFilter handleFilter={handleFilter} />
+                <DesktopFilter handleFilter={handleFilter} filters={filters} />
 
                 {/* Product grid */}
                 <ProductGrid products={products} />
@@ -233,6 +238,7 @@ const MobileFilter = ({
   mobileFiltersOpen,
   setMobileFiltersOpen,
   handleFilter,
+  filters
 }) => {
   return (
     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -349,7 +355,7 @@ const MobileFilter = ({
   );
 };
 
-const DesktopFilter = ({ handleFilter }) => {
+const DesktopFilter = ({ handleFilter, filters}) => {
   return (
     <form className="hidden lg:block">
       <h3 className="sr-only">Categories</h3>
@@ -408,21 +414,22 @@ const DesktopFilter = ({ handleFilter }) => {
 };
 
 const Pagination = ({ handlePage, page, setPage, totalItems}) => {
+  const totalPage = Math.ceil(totalItems / ITEMS_PER_PAGE)
   return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
-        <a
-          href="#"
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        <div
+          onClick={()=>handlePage(page>1? page-1 : page)}
+          className="relative inline-flex items-center cursor-pointer rounded-md hover:bg-gray-300 border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
         >
           Previous
-        </a>
-        <a
-          href="#"
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        </div>
+        <div
+        onClick={()=>handlePage(page<totalPage? page+1 : page)}
+          className="relative ml-3 inline-flex cursor-pointer hover:bg-gray-300 items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
         >
           Next
-        </a>
+        </div>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
@@ -431,7 +438,7 @@ const Pagination = ({ handlePage, page, setPage, totalItems}) => {
             <span className="font-medium">
               {(page - 1) * ITEMS_PER_PAGE + 1}
             </span>{" "}
-            to <span className="font-medium">{page * ITEMS_PER_PAGE}</span> of{" "}
+            to <span className="font-medium">{page * ITEMS_PER_PAGE > totalItems ? totalItems : page*ITEMS_PER_PAGE}</span> of{" "}
             <span className="font-medium">{totalItems}</span> results
           </p>
         </div>
@@ -440,32 +447,33 @@ const Pagination = ({ handlePage, page, setPage, totalItems}) => {
             className="isolate inline-flex -space-x-px rounded-md shadow-sm"
             aria-label="Pagination"
           >
-            <a
-              href="#"
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            <div
+              onClick={()=>handlePage( page>1? page-1 : page)}
+            
+              className="relative cursor-pointer inline-flex items-center rounded-l-md px-2 py-2 text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-            </a>
+            </div>
             {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
-            {Array.from({length:Math.ceil(totalItems / ITEMS_PER_PAGE) }).map(
+            {Array.from({length:totalPage }).map(
               (el,index) => (
                 <div
                 key={index}
                   onClick={() => handlePage(index + 1)}
                   aria-current="page"
-                  className={`relative inline-flex items-center cursor-pointer rounded-r-md px-3 py-2 ${index+1===page?" text-white bg-gray-700":"bg-white text-gray-800"} ring-1 ring-inset ring-gray-300 hover:bg-slate-300 focus:z-20 focus:outline-offset-0`}   >
+                  className={`relative inline-flex items-center cursor-pointer rounded-r-md px-3 py-2 ${index+1===page?" text-white bg-gray-700":"bg-white text-gray-800"} ring-1 ring-inset ring-gray-300 focus:z-20 focus:outline-offset-0`}   >
                   {index + 1}
                 </div>
               )
             )}
-            <a
-              href="#"
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            <div
+            onClick={()=>handlePage(page<totalPage? page+1 : page)}
+              className="relative cursor-pointer inline-flex items-center rounded-r-md px-2 py-2 text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-            </a>
+            </div>
           </nav>
         </div>
       </div>
@@ -481,7 +489,7 @@ const ProductGrid = ({ products }) => {
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.data?.map((product) => (
-              <Link to="product-details" key={product.id}>
+              <Link to={`/product-detail/${product.id}`} key={product.id}>
                 <div
                   key={product.id}
                   className="group relative px-4 py-2 border-2"

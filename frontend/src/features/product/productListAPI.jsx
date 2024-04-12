@@ -7,6 +7,17 @@ export const fetchAllProducts = () => {
     )
   }
 
+
+  export const fetchAllProductsById = (id) => {
+    return new Promise(async(resolve) =>{
+     const response = await fetch(`http://localhost:8080/product?id=${id}`)
+     const data = await response.json()
+     resolve({data})
+}
+    )
+  }
+
+
   export const fetchAllProductsByFilters = (filter,sort,pagination) => {
 
     //ex:filter for {"category":["smartphone","laptops",...]}
@@ -17,7 +28,6 @@ export const fetchAllProducts = () => {
       if(categoryValue.length){
         const lastCategoryValue = categoryValue[categoryValue.length-1]
         queryString += `${key}=${lastCategoryValue}&`
-        console.log(queryString)
       }
     }
     //sort
@@ -37,3 +47,23 @@ export const fetchAllProducts = () => {
 }
     )
   }
+
+//fetch using category
+export const fetchAllCategories = () => {
+  return new Promise(async(resolve) =>{
+   const response = await fetch("http://localhost:8080/category")
+   const data = await response.json()
+   resolve({data})
+}
+  )
+}
+
+//fetch using category
+export const fetchAllBrands = () => {
+  return new Promise(async(resolve) =>{
+   const response = await fetch("http://localhost:8080/brand")
+   const data = await response.json()
+   resolve({data})
+}
+  )
+}
