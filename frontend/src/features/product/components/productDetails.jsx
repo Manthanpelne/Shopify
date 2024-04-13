@@ -4,6 +4,8 @@ import { RadioGroup } from '@headlessui/react'
 import { fetchAllProductsByIdAsync, selectProductById } from '../productListSlice'
 import {useSelector, useDispatch} from "react-redux"
 import { useParams } from 'react-router-dom'
+import { addToCartAsync } from '../../cart/cartSlice'
+import {selectLoggedInUser} from "../../auth/authSlice"
 
 // const pro = {
 //   name: 'Basic Tee 6-Pack',
@@ -92,12 +94,24 @@ export const ProductDetails=()=> {
 // console.log(params.id)
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
+  const user = useSelector(selectLoggedInUser)
+  //console.log(user)
   const product = useSelector(selectProductById)
+  //console.log(product)
+
+  const handleCart=(e)=>{
+    e.preventDefault()
+ const newItem = {...product[0], quantity:1,user:user.id}
+ delete newItem["id"]
+    dispatch(addToCartAsync(newItem))
+   }
 
 
   useEffect(()=>{
     dispatch(fetchAllProductsByIdAsync(params.id))
   },[dispatch,params.id])
+
+
 
   return (
     <div className="bg-white">
@@ -183,7 +197,7 @@ export const ProductDetails=()=> {
       <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
         {product && product.map((item)=>(
-           <h1 className='font-bold text-gray-800 md:text-2xl'>
+           <h1 key={item.id} className='font-bold text-gray-800 md:text-2xl'>
             {item.title}
            </h1>
           ))}
@@ -309,6 +323,7 @@ export const ProductDetails=()=> {
 
             <button
               type="submit"
+              onClick={handleCart}
               className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Add to bag

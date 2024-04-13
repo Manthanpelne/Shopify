@@ -22,6 +22,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
+import { selectLoggedInUser } from "../../auth/authSlice";
 
 const sortOptions = [
   { name: "Best Rating", sort: "-rating", current: false },
@@ -52,6 +53,7 @@ export const ProductList = () => {
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
+  const user = useSelector(selectLoggedInUser)
 
 
   const filters = [
@@ -108,7 +110,7 @@ export const ProductList = () => {
 
 
   const handlePage = (page) => {
-    console.log({page})
+   // console.log({page})
     setPage(page);
   };
 
@@ -481,9 +483,11 @@ const Pagination = ({ handlePage, page, setPage, totalItems}) => {
   );
 };
 
+
 const ProductGrid = ({ products }) => {
   return (
     <div className="lg:col-span-3">
+      <Link to="/cart"><button className="bg-slate-400">cart</button></Link>
       {/* Your content */}
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
