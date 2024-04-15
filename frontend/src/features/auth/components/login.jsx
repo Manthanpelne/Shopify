@@ -10,7 +10,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError)
   const user = useSelector(selectLoggedInUser)
-  console.log(error)
+  //console.log(error)
   const {
     register,
     handleSubmit,
@@ -185,7 +185,10 @@ export const Login = () => {
                 )}
               </div>
               <div>
+                <div className="flex justify-between">
                 <label className="font-medium">Password</label>
+                <Link to="/forgotPassword" className="text-indigo-600 font-semibold">Forgot Password?</Link>
+                </div>
                 <input
                   type="password"
                   id="password"

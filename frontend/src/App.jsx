@@ -17,6 +17,14 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsByUserIdAsync } from './features/cart/cartSlice';
 import { selectLoggedInUser } from './features/auth/authSlice';
+import OrderSuccessPage from './pages/orderSuccessPage';
+import { UserOrders } from './features/user/components/userOrders';
+import { UserProfile } from './features/user/components/userProfile';
+import UserProfilePage from './pages/userProfilePage';
+import { fetchLoggedInUserAsync } from './features/user/userSlice';
+import { Logout } from './features/auth/components/logout';
+import { ForgetPass } from './features/auth/components/forgetPassword';
+import { ForgetPasswordPage } from './pages/forgotPasswordPage';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +46,6 @@ const router = createBrowserRouter([
    <Protected>
      <CartPage/>
    </Protected>
-    
   },
   {
     path: "/checkout",
@@ -49,6 +56,32 @@ const router = createBrowserRouter([
     element:<ProductDetailPage/>
   },
 
+  {
+    path: "/order-success/:id",
+    element:<OrderSuccessPage/>
+  },
+  {
+    path: "/myOrders",
+    element:<Protected>
+          <UserOrders/>
+         </Protected>
+  },
+  {
+    path: "/user-profile",
+    element:<Protected>
+          <UserProfilePage/>
+         </Protected>
+  },
+
+  {
+    path:"/logout",
+    element:<Logout/>
+  },
+  {
+    path:"/forgotPassword",
+    element:<ForgetPasswordPage/>
+  }
+
 ]);
 
 
@@ -56,11 +89,12 @@ const router = createBrowserRouter([
 const App=()=> {
  const dispatch = useDispatch()
   const user = useSelector(selectLoggedInUser)
-  console.log(user)
+  //console.log(user)
 
   useEffect(()=>{
     if(user){
-  dispatch(fetchItemsByUserIdAsync(user.id))
+      dispatch(fetchItemsByUserIdAsync(user.id))
+       dispatch(fetchLoggedInUserAsync(user.id))
     }
   },[dispatch,user])
 

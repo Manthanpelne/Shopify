@@ -45,3 +45,12 @@ export const deleteItemFromCart = (itemId) => {
 }
   )
 }
+
+export const  resetCart = async(userId) => {
+  const response = await fetchItemsByUserId(userId)
+  const items = response.data
+  for(let item of items){
+    await deleteItemFromCart(item.id)
+  }
+  resolve({status:"success"})
+}
