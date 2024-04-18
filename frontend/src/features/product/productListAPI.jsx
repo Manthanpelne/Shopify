@@ -18,6 +18,37 @@ export const fetchAllProducts = () => {
   }
 
 
+  
+  export const createProduct = (product) => {
+    return new Promise(async(resolve) =>{
+     const response = await fetch("http://localhost:8080/product/",{
+      method:"POST",
+      body:JSON.stringify(product),
+      headers:{"content-type":"application/json"}
+     })
+     const data = await response.json()
+     resolve({data})
+}
+    )
+  }
+
+
+
+  export const updateProduct = (update) => {
+    return new Promise(async(resolve) =>{
+     const response = await fetch("http://localhost:8080/product/"+update.id,{
+      method:"PATCH",
+      body:JSON.stringify(update),
+      headers:{"content-type":"application/json"}
+     })
+     const data = await response.json()
+     resolve({data})
+  }
+    )
+  }
+
+
+
   export const fetchAllProductsByFilters = (filter,sort,pagination) => {
 
     //ex:filter for {"category":["smartphone","laptops",...]}

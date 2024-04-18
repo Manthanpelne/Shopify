@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { deleteItemFromCartAsync, selectItems, updateCartAsync } from "./cartSlice"
+import { discountedPrice } from "../../app/constants"
 
 const products = [
   {
@@ -37,11 +38,12 @@ const products = [
     const dispatch = useDispatch()
     const items = useSelector(selectItems)
 
-    const totalAmount = items.reduce((amount,item)=>item.price * item.quantity + amount, 0)
+    const totalAmount = items.reduce((amount,item)=>discountedPrice(item) * item.quantity + amount, 0)
     const totalItems = items.reduce((total,item)=>item.quantity + total, 0)
 
 
 const handleQuantity=(e,product)=>{
+  console.log(product)
  dispatch(updateCartAsync({...product, quantity: +e.target.value}))
 }
 
@@ -72,7 +74,7 @@ const handleDelete =(e,id)=>{
                                       <h3>
                                         <a href={product.href}>{product.title}</a>
                                       </h3>
-                                      <p className="ml-4">${product.price}</p>
+                                      <p className="ml-4">${Math.round(product.price * (1 - product.discountPercentage / 100))}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">{product.brand}</p>
                                   </div>

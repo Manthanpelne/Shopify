@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
-import { fetchAllProductsByIdAsync, selectProductById } from '../productListSlice'
+import { fetchAllProductsByIdAsync, selectProductById } from '../../product/productListSlice'
 import {useSelector, useDispatch} from "react-redux"
 import { useParams } from 'react-router-dom'
-import { addToCartAsync, selectItems } from '../../cart/cartSlice'
+import { addToCartAsync } from '../../cart/cartSlice'
 import {selectLoggedInUser} from "../../auth/authSlice"
-import { discountedPrice } from '../../../app/constants'
 
 // const pro = {
 //   name: 'Basic Tee 6-Pack',
@@ -89,10 +88,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const ProductDetails=()=> {
+export const AdminProductDetails=()=> {
   const dispatch = useDispatch()
   const params = useParams()
-  const items = useSelector(selectItems)
 // console.log(params.id)
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
@@ -103,15 +101,11 @@ export const ProductDetails=()=> {
 
   const handleCart=(e)=>{
     e.preventDefault()
-   if(items.findIndex(item=>item.productId===product[0].id)<0){
- const newItem = {...product[0],productId:product[0].id, quantity:1,user:user.id}
+ const newItem = {...product[0], quantity:1,user:user.id}
  delete newItem["id"]
     dispatch(addToCartAsync(newItem))
    }
-  else{
-   alert("already added to cart")
-  }
-  }
+
 
   useEffect(()=>{
     dispatch(fetchAllProductsByIdAsync(params.id))
@@ -215,13 +209,15 @@ export const ProductDetails=()=> {
           <h2 className="sr-only">Product information</h2>
           <div className="flex gap-3">
           <p className="text-3xl tracking-tight text-gray-900">${product && product.map((item)=>(
-            Math.round(item.price-item.price*item.discountPercentage/100)
+            item.price
           ))}</p> 
           <p className="text-l pt-2 tracking-tight text-red-700">{product && product.map((item)=>(
             -item.discountPercentage
           ))}%</p>
           </div>
-          <p className="text-gray-700">$: <span className="line-through text-gray-500">{product && product.map((item)=>(item.price))}</span></p>
+          <p className="text-gray-700">$: <span className="line-through text-gray-500">{product && product.map((item)=>(
+            Math.floor(item.price*item.discountPercentage/100 + item.price)
+          ))}</span></p>
 
           
            <span className="block w-full h-px mt-3 bg-gray-400"></span>

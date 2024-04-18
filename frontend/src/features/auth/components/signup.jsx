@@ -58,7 +58,7 @@ function SignUp() {
             <form
               noValidate
               onSubmit={handleSubmit((data) => {
-                dispatch(createUserAsync({email:data.email, name:data.name, password:data.password, addresses:[] }))
+                dispatch(createUserAsync({email:data.email, name:data.name, password:data.password, addresses:[], role:"user" }))
                 console.log(data);
               })}
               className="space-y-5"

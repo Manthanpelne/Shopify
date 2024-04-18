@@ -8,7 +8,7 @@ import {
   selectAllCategory,
   selectAllProducts,
   selectTotalItems,
-} from "../productListSlice";
+} from "../../product/productListSlice";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
@@ -23,8 +23,6 @@ import {
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/authSlice";
-import { Pagination } from "../../common/pagination";
-import { discountedPrice } from "../../../app/constants";
 
 const sortOptions = [
   { name: "Best Rating", sort: "-rating", current: false },
@@ -44,7 +42,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const ProductList = () => {
+export const AdminProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const totalItems = useSelector(selectTotalItems)
@@ -135,6 +133,7 @@ export const ProductList = () => {
 
   return (
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
+      
       <div className="bg-white">
         <div>
           {/* Mobile filter dialog */}
@@ -148,7 +147,7 @@ export const ProductList = () => {
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 arr">
-                New Arrivals
+                New Arrivals ADMIN
               </h1>
 
               <div className="flex items-center">
@@ -223,9 +222,16 @@ export const ProductList = () => {
               <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                 {/* Filters */}
                 <DesktopFilter handleFilter={handleFilter} filters={filters} />
-
+                
+                <div className="lg:col-span-3">
+                  <div>
+                    <Link to="/admin/product-form">
+                <button className="bg-slate-600 px-3 py-1 text-white hover:bg-slate-700">Add New Product</button>
+                    </Link>
+                  </div>
                 {/* Product grid */}
                 <ProductGrid products={products} />
+                </div>
               </div>
             </section>
 
@@ -417,6 +423,73 @@ const DesktopFilter = ({ handleFilter, filters}) => {
   );
 };
 
+const Pagination = ({ handlePage, page, setPage, totalItems}) => {
+  const totalPage = Math.ceil(totalItems / ITEMS_PER_PAGE)
+  return (
+    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div className="flex flex-1 justify-between sm:hidden">
+        <div
+          onClick={()=>handlePage(page>1? page-1 : page)}
+          className="relative inline-flex items-center cursor-pointer rounded-md hover:bg-gray-300 border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+        >
+          Previous
+        </div>
+        <div
+        onClick={()=>handlePage(page<totalPage? page+1 : page)}
+          className="relative ml-3 inline-flex cursor-pointer hover:bg-gray-300 items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+        >
+          Next
+        </div>
+      </div>
+      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm text-gray-700">
+            Showing{" "}
+            <span className="font-medium">
+              {(page - 1) * ITEMS_PER_PAGE + 1}
+            </span>{" "}
+            to <span className="font-medium">{page * ITEMS_PER_PAGE > totalItems ? totalItems : page*ITEMS_PER_PAGE}</span> of{" "}
+            <span className="font-medium">{totalItems}</span> results
+          </p>
+        </div>
+        <div>
+          <nav
+            className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+            aria-label="Pagination"
+          >
+            <div
+              onClick={()=>handlePage( page>1? page-1 : page)}
+            
+              className="relative cursor-pointer inline-flex items-center rounded-l-md px-2 py-2 text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              <span className="sr-only">Previous</span>
+              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+            </div>
+            {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
+            {Array.from({length:totalPage }).map(
+              (el,index) => (
+                <div
+                key={index}
+                  onClick={() => handlePage(index + 1)}
+                  aria-current="page"
+                  className={`relative inline-flex items-center cursor-pointer rounded-r-md px-3 py-2 ${index+1===page?" text-white bg-gray-700":"bg-white text-gray-800"} ring-1 ring-inset ring-gray-300 focus:z-20 focus:outline-offset-0`}   >
+                  {index + 1}
+                </div>
+              )
+            )}
+            <div
+            onClick={()=>handlePage(page<totalPage? page+1 : page)}
+              className="relative cursor-pointer inline-flex items-center rounded-r-md px-2 py-2 text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              <span className="sr-only">Next</span>
+              <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 
 const ProductGrid = ({ products }) => {
@@ -425,7 +498,7 @@ const ProductGrid = ({ products }) => {
       <Link to="/cart"><button className="bg-slate-400">cart</button></Link>
       <Link to="/myOrders"><button className="bg-slate-400">myOrders</button></Link>
       <Link to="/user-profile"><button className="bg-slate-400">userProfile</button></Link>
-      <Link to="/admin"><button className="bg-slate-400">admin</button></Link>
+      <Link to="/admin/orders"><button className="bg-slate-400">AdminOrders</button></Link>
       {/* Your content */}
       <div className="bg-white">
       <Link to="/logout"><button className="bg-slate-400">logout</button></Link>
@@ -473,8 +546,13 @@ const ProductGrid = ({ products }) => {
                       </p>
                     </div>
                   </div>
-                  { product.stock<=0 && <p className="text-red-600 font-semibold pt-1 text-center">Out of stock</p>}
+                 { product.deleted && <p className="text-red-400">Product deleted</p>}
                 </div>
+                  <div className="py-3 flex justify-between">
+                    <Link to={`/admin/product-form/edit/${product.id}`}>
+                  <button className="bg-gray-500 text-white px-3">Edit</button>
+                    </Link>
+                  </div>
               </Link>
             ))}
           </div>

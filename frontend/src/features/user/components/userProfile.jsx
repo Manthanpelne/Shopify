@@ -77,6 +77,7 @@ export const UserProfile = () => {
                 {user.email}
               </h1>
             </div>
+            {user.role==="admin" && <h3>role : {user.role}</h3> }
           </div>
           <div>
             <img
@@ -86,7 +87,7 @@ export const UserProfile = () => {
             />
           </div>
         </div>
-
+         
         <div className="border-t bg-white border-gray-300 px-4 py-6 sm:px-6">
           {/* add new address form */}
           <button
