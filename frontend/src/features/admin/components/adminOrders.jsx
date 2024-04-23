@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ITEMS_PER_PAGE } from "../../../app/constants";
+import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProductsByFiltersAsync } from "../../product/productListSlice";
 import {
@@ -16,6 +16,7 @@ import {
   ArrowDownIcon,
 } from "@heroicons/react/24/solid";
 import { Pagination } from "../../common/pagination";
+import { selectUserInfo, selectUserOrders } from "../../user/userSlice";
 
 export const AdminOrders = () => {
   const [editOrderId, setEditOrderId] = useState(true);
@@ -27,12 +28,13 @@ export const AdminOrders = () => {
   //console.log(orders);
   const totalOrders = useSelector(selectTotalOrders);
 
+
   const handlePage = (page) => {
     setPage(page);
   };
 
   useEffect(() => {
-    const pagination = { _page: page, _per_page: ITEMS_PER_PAGE };
+    const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
     dispatch(fetchAllOrdersAsync({ sort, pagination }));
   }, [dispatch, page, sort]);
 
@@ -43,13 +45,13 @@ export const AdminOrders = () => {
   const handleShow = () => {};
 
   const handleStatus = async (e, order) => {
-    console.log(order);
+    //console.log(order);
     dispatch(updateOrderAsync({ ...order, status: e.target.value }));
     setEditOrderId(true);
   };
 
   const handleSort = (sortOption) => {
-    const sort = { _sort: sortOption.sort };
+    const sort = { _sort: sortOption.sort, order: sortOption.order };
     console.log({ sort });
     setSort(sort);
   };
@@ -118,7 +120,7 @@ export const AdminOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">
-                  {orders?.data?.map((order) => (
+                  {orders && orders.map((order) => (
                     <tr className="border-b border-gray-200 hover:bg-gray-100">
                       <td className="py-3 px-6 text-left whitespace-nowrap">
                         <div className="flex items-center">
@@ -132,11 +134,11 @@ export const AdminOrders = () => {
                             <div className="mr-2">
                               <img
                                 className="w-6 h-6 rounded-full"
-                                src={item.thumbnail}
+                                src={item.product.thumbnail}
                               />
                             </div>
                             <span>
-                              {item.title} - qty:{item.quantity} - ${item.price}
+                              {item.title} - qty:{item.quantity} - ${discountedPrice(item.product)}
                             </span>
                           </div>
                         ))}

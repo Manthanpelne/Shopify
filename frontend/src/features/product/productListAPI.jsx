@@ -10,8 +10,9 @@ export const fetchAllProducts = () => {
 
   export const fetchAllProductsById = (id) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch(`http://localhost:8080/product?id=${id}`)
+     const response = await fetch("http://localhost:8080/product/"+id)
      const data = await response.json()
+     console.log("data of pro:" + data)
      resolve({data})
 }
     )
@@ -49,7 +50,7 @@ export const fetchAllProducts = () => {
 
 
 
-  export const fetchAllProductsByFilters = (filter,sort,pagination) => {
+  export const fetchAllProductsByFilters = (filter,sort,pagination,admin) => {
 
     //ex:filter for {"category":["smartphone","laptops",...]}
     let queryString =  ""
@@ -69,11 +70,15 @@ export const fetchAllProducts = () => {
     for(let key in pagination){
       queryString+=`${key}=${pagination[key]}&`
     }
+    if(admin){
+      queryString += `admin=true`
+    }
     //console.log(queryString)
     return new Promise(async(resolve) =>{
      const response = await fetch("http://localhost:8080/product?"+queryString)
      const data = await response.json()
-     const totalItems = data.items
+     //console.log(data)
+     const totalItems = response.headers.get('X-Total-Count');
      resolve({data:{products:data,totalItems:+totalItems}})
 }
     )

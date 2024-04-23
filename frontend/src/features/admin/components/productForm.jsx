@@ -5,11 +5,13 @@ import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
+
 export const ProductForm=()=>{
     const brand = useSelector(selectAllBrands)
     const category = useSelector(selectAllCategory)
     const selectedProduct = useSelector(selectProductById)
     console.log(selectedProduct)
+
 
     const {
         register,
@@ -21,6 +23,7 @@ export const ProductForm=()=>{
       } = useForm();
       const dispatch = useDispatch()
       const params = useParams()
+
 
 
       const handleDelete = ()=>{
@@ -70,15 +73,17 @@ export const ProductForm=()=>{
           product.rating = +product.rating
           product.discountPercentage = +product.discountPercentage
           product.stock = +product.stock
-          console.log(product)
+          //console.log(product)
 
           if(params.id){
             product.id = params.id
             product.rating = selectedProduct.rating || 0
             dispatch(updateProductAsync(product))
+            //alert.success("Product updated successully")
             reset()
           }else{
           dispatch(createProductAsync(product))
+          //alert.success("Product created successfully")
           reset()
           }
         })}
@@ -87,7 +92,7 @@ export const ProductForm=()=>{
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-center font-semibold leading-7 text-gray-900">Add Product</h2>
             
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="mt-9 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
                   <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                     Product Title

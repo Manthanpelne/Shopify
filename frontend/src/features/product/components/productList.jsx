@@ -27,9 +27,9 @@ import { Pagination } from "../../common/pagination";
 import { discountedPrice } from "../../../app/constants";
 
 const sortOptions = [
-  { name: "Best Rating", sort: "-rating", current: false },
-  { name: "Price: Low to High", sort: "price", current: false },
-  { name: "Price: High to Low", sort: "-price", current: false },
+  { name: "Best Rating", sort: "rating",order:"desc", current: false },
+  { name: "Price: Low to High", sort: "price",order:"asc", current: false },
+  { name: "Price: High to Low", sort: "price",order:"desc", current: false },
 ];
 const subCategories = [
   { name: "Totes", href: "#" },
@@ -55,7 +55,7 @@ export const ProductList = () => {
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
-  const user = useSelector(selectLoggedInUser)
+  //const user = useSelector(selectLoggedInUser)
 
 
   const filters = [
@@ -105,7 +105,7 @@ export const ProductList = () => {
 
 
   const handleSort = (e, option) => {
-    const newSort = { _sort: option.sort };
+    const newSort = { _sort: option.sort, _order:option.order };
     setSort(newSort);
   };
 
@@ -118,7 +118,7 @@ export const ProductList = () => {
 
 
   useEffect(() => {
-    const pagination = {_page:page,_per_page:ITEMS_PER_PAGE};
+    const pagination = {_page:page,_limit:ITEMS_PER_PAGE};
     dispatch(fetchAllProductsByFiltersAsync({ filter, sort, pagination }));
   }, [dispatch, filter,sort,page]);
 
@@ -431,7 +431,7 @@ const ProductGrid = ({ products }) => {
       <Link to="/logout"><button className="bg-slate-400">logout</button></Link>
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-            {products.data?.map((product) => (
+            {products.map((product) => (
               <Link to={`/product-detail/${product.id}`} key={product.id}>
                 <div
                   key={product.id}

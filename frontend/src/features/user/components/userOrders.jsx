@@ -5,37 +5,38 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchLoggedInUserOrders } from "../userApi"
 import { fetchLoggedInUserOrdersAsync, selectUserOrders } from "../userSlice"
 import { selectLoggedInUser } from "../../auth/authSlice"
-
+import { discountedPrice } from "../../../app/constants"
+import { selectUserInfo } from "../userSlice"
 
 export const UserOrders = () => {
   const dispatch = useDispatch()
- const user = useSelector(selectLoggedInUser)
- //console.log(user)
+
  const orders = useSelector(selectUserOrders)
+ //console.log(orders)
  //console.log(orders)
 
 
 useEffect(()=>{
-dispatch(fetchLoggedInUserOrdersAsync(user.id))
-},[])
+dispatch(fetchLoggedInUserOrdersAsync())
+},[dispatch])
 
   return (
- <div>
-   {orders.map((item)=>(
     <div>
-      <h1>Items ordered</h1>
+   <h1>Items ordered</h1>
+   {orders && orders.map((item)=>(
+    <div>
      <div className="mx-auto mt-10 max-w-5xl px-4 sm:px-6 lg:px-8">
-    <div className="border-t bg-white border-gray-200 px-4 py-6 sm:px-6">
+    <div className="border-t bg-white border-gray-200 px-4 py-2 sm:px-6">
+                            <h1 className="p-2 text-sm font-semibold py-4">Product ID : {item.id}</h1>
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
                             {item.items.map((product) => (
                               <>
-                              <h1 className="p-2 text-sm font-semibold">Product ID : {product.id}</h1>
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
-                                    src={product.thumbnail}
-                                    alt={product.title}
+                                    src={product.product.thumbnail}
+                                    alt={product.product.title}
                                     className="h-full w-full object-cover object-center"
                                   />
                                 </div>
@@ -44,9 +45,9 @@ dispatch(fetchLoggedInUserOrdersAsync(user.id))
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
-                                        <a href={product.href}>{product.title}</a>
+                                        <a href={product.product.href}>{product.product.title}</a>
                                       </h3>
-                                      <p className="ml-4">${product.price}</p>
+                                      <p className="ml-4">${discountedPrice(product.product)}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">{product.brand}</p>
                                   </div>

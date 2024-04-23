@@ -45,6 +45,7 @@ function classNames(...classes) {
 export const AdminProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
+  //console.log(products)
   const totalItems = useSelector(selectTotalItems)
   const brand = useSelector(selectAllBrands)
   const category = useSelector(selectAllCategory)
@@ -103,7 +104,7 @@ export const AdminProductList = () => {
 
 
   const handleSort = (e, option) => {
-    const newSort = { _sort: option.sort };
+    const newSort = { _sort: option.sort, _order:option.order };
     setSort(newSort);
   };
 
@@ -116,8 +117,8 @@ export const AdminProductList = () => {
 
 
   useEffect(() => {
-    const pagination = {_page:page,_per_page:ITEMS_PER_PAGE};
-    dispatch(fetchAllProductsByFiltersAsync({ filter, sort, pagination }));
+    const pagination = {_page:page,_limit:ITEMS_PER_PAGE};
+    dispatch(fetchAllProductsByFiltersAsync({ filter, sort, pagination, admin:true }));
   }, [dispatch, filter,sort,page]);
 
 
@@ -504,7 +505,7 @@ const ProductGrid = ({ products }) => {
       <Link to="/logout"><button className="bg-slate-400">logout</button></Link>
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-            {products.data?.map((product) => (
+            {products.map((product) => (
               <Link to={`/product-detail/${product.id}`} key={product.id}>
                 <div
                   key={product.id}

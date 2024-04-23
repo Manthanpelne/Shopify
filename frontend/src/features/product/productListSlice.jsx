@@ -33,8 +33,8 @@ export const fetchAllProductsByIdAsync =  createAsyncThunk(
 
 export const fetchAllProductsByFiltersAsync =  createAsyncThunk(
   "product/fetchAllProductsByFilters",
-  async ({filter,sort,pagination}) => {
-    const response = await fetchAllProductsByFilters(filter,sort,pagination)
+  async ({filter,sort,pagination, admin}) => {
+    const response = await fetchAllProductsByFilters(filter,sort,pagination, admin)
     // The value we return becomes the `fulfilled` action payload
     return response.data
   },
@@ -140,7 +140,7 @@ export const productSlice = createSlice({
       .addCase(updateProductAsync.fulfilled, (state,action)=>{
         state.status = "idle";
         const index = state.products.findIndex(item=>item.id === action.payload.id)
-        state.payload[index] = action.payload
+        state.products[index] = action.payload
       })
     }
   })

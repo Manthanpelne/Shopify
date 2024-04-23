@@ -22,17 +22,17 @@ export const UserProfile = () => {
   } = useForm();
 
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo);
-  //console.log(user)
+  const userInfo = useSelector(selectUserInfo);
+  console.log(userInfo)
 
   const handleRemove = (e, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] };
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses] };
     newUser.addresses.splice(index, 1);
     dispatch(updateUserAsync(newUser));
   };
 
   const handleEdit = (addressUpdate, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] };
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses] };
     newUser.addresses.splice(index, 1, addressUpdate);
     dispatch(updateUserAsync(newUser));
     setSelectedEditIndex(-1);
@@ -51,7 +51,7 @@ export const UserProfile = () => {
   };
 
   const handleAdd = (address) => {
-    const newUser = { ...user, addresses: [...user.addresses, address] };
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses, address] };
     dispatch(updateUserAsync(newUser));
     setShowAddAddressForm(false);
   };
@@ -66,7 +66,7 @@ export const UserProfile = () => {
                 NAME
               </label>
               <h1 className="text-sm my-0 font-semibold tracking-tight text-gray-600">
-                {user.name}
+                {userInfo.name}
               </h1>
             </div>
             <div className="mt-6 px-4">
@@ -74,10 +74,10 @@ export const UserProfile = () => {
                 EMAIL
               </label>
               <h1 className="text-sm my-0 font-semibold tracking-tight text-gray-600">
-                {user.email}
+                {userInfo.email}
               </h1>
             </div>
-            {user.role==="admin" && <h3>role : {user.role}</h3> }
+            {userInfo.role==="admin" && <h3>role : {userInfo.role}</h3> }
           </div>
           <div>
             <img
@@ -278,7 +278,7 @@ export const UserProfile = () => {
           </p>
           <div className="pt-4 text-gray-500">
             <ul role="list" className="divide-y divide-gray-300 border-2">
-              {user.addresses.map((person, index) => (
+              {userInfo.addresses.map((person, index) => (
                 <li key={index} className="">
                   <div>
                     {selectedEditIndex === index ? (

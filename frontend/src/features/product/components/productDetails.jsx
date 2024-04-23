@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { addToCartAsync, selectItems } from '../../cart/cartSlice'
 import {selectLoggedInUser} from "../../auth/authSlice"
 import { discountedPrice } from '../../../app/constants'
+import { selectUserInfo } from '../../user/userSlice'
 
 // const pro = {
 //   name: 'Basic Tee 6-Pack',
@@ -96,23 +97,25 @@ export const ProductDetails=()=> {
 // console.log(params.id)
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
-  const user = useSelector(selectLoggedInUser)
-  //console.log(user)
+  const user = useSelector(selectUserInfo)
+  console.log(user)
   const product = useSelector(selectProductById)
-  //console.log(product)
+  console.log(product)
+
 
   const handleCart=(e)=>{
     e.preventDefault()
-   if(items.findIndex(item=>item.productId===product[0].id)<0){
- const newItem = {...product[0],productId:product[0].id, quantity:1,user:user.id}
- delete newItem["id"]
+   if(items.findIndex(item=>item.product.id===product[0].id)<0){
+ const newItem = {product:product[0].id, quantity:1}
     dispatch(addToCartAsync(newItem))
+    //alert.success("Item successfully added to Cart")
    }
   else{
    alert("already added to cart")
   }
   }
 
+  console.log(params.id)
   useEffect(()=>{
     dispatch(fetchAllProductsByIdAsync(params.id))
   },[dispatch,params.id])
@@ -121,6 +124,7 @@ export const ProductDetails=()=> {
 
   return (
     <div className="bg-white">
+      {/* {!user && <Navigate to="/login" replace={true}></Navigate> } */}
     <div className="pt-6">
       <nav aria-label="Breadcrumb">
         <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -156,8 +160,8 @@ export const ProductDetails=()=> {
             </li>
           ))}
           <li className="text-sm">
-            {/* <a href={product.href} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
-              {product.name}
+            {/* <a href={productduct.href} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
+              {productduct.name}
             </a> */}
           </li>
         </ol>
@@ -199,7 +203,7 @@ export const ProductDetails=()=> {
       </div>
       ))}
 
-      {/* Product info */}
+      {/* productduct info */}
       <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
         {product && product.map((item)=>(

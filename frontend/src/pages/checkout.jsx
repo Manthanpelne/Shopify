@@ -7,9 +7,10 @@ import { selectItems } from "../features/cart/cartSlice";
 import { updateCartAsync, deleteItemFromCartAsync } from "../features/cart/cartSlice";
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { selectLoggedInUser, updateUserAsync } from "../features/auth/authSlice";
+import { updateUserAsync } from "../features/user/userSlice";
 import { createOrderAsync, selectCurrentOrder } from "../features/orders/orderSlice";
 import { selectUserInfo } from "../features/user/userSlice";
+import { discountedPrice } from "../app/constants";
 
 const products = [
   {
@@ -50,14 +51,15 @@ export const Checkout = () => {
   } = useForm();
 
   const user = useSelector(selectUserInfo)
+  console.log(user)
 
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch()
   const items = useSelector(selectItems)
   const currentOrder = useSelector(selectCurrentOrder)
-  console.log("currentOrder" + currentOrder)
+  //console.log("currentOrder" + currentOrder)
 
-  const totalAmount = items.reduce((amount,item)=>item.price * item.quantity + amount, 0)
+  const totalAmount = items.reduce((amount,item)=>discountedPrice(item.product) * item.quantity + amount, 0)
   const totalItems = items.reduce((total,item)=>item.quantity + total, 0)
 
 
@@ -65,7 +67,7 @@ export const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("cash")
 
 const handleQuantity=(e,product)=>{
-dispatch(updateCartAsync({...product, quantity: +e.target.value}))
+dispatch(updateCartAsync({id:product.id, quantity: +e.target.value}))
 }
 
 const handleDelete =(e,id)=>{
@@ -83,7 +85,7 @@ const handlePayment = (e)=>{
 }
 
 const handleOrder = (e)=>{
-  const order = {items, totalAmount, totalItems, user, paymentMethod, selectedAddress, status:"pending"}
+  const order = {items, totalAmount, totalItems, user:user.id, paymentMethod, selectedAddress, status:"pending"}
  dispatch(createOrderAsync(order))
 }
 
@@ -364,8 +366,8 @@ const handleOrder = (e)=>{
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
-                                    src={product.thumbnail}
-                                    alt={product.title}
+                                    src={product.product.thumbnail}
+                                    alt={product.product.title}
                                     className="h-full w-full object-cover object-center"
                                   />
                                 </div>
@@ -374,11 +376,11 @@ const handleOrder = (e)=>{
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
-                                        <a href={product.href}>{product.title}</a>
+                                        <a href={product.product.href}>{product.product.title}</a>
                                       </h3>
-                                      <p className="ml-4">${product.price}</p>
+                                      <p className="ml-4">${discountedPrice(product.product)}</p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.brand}</p>
+                                    <p className="mt-1 text-sm text-gray-500">{product.product.brand}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     
