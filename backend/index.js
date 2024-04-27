@@ -74,7 +74,7 @@ app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:["https://shopify-client-seven.vercel.app"],
+    origin:"*",
     methods:["POST","GET","PATCH","DELETE"],
     credentials:true
   })
