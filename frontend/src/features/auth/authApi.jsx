@@ -12,7 +12,7 @@ export const createUser = (userData) => {
   }
 
 
-  export const checkUser = (loginInfo) => {
+  export const loginUser = (loginInfo) => {
     return new Promise(async(resolve,reject) =>{
  try {
    const response = await fetch("http://localhost:8080/auth/login",{
@@ -22,9 +22,9 @@ export const createUser = (userData) => {
    })
    if(response.ok){
      const data = await response.json()
-      resolve({data:data.token})
+      resolve({data})
    }else{
-    const error = await response.json()
+    const error = await response.text()
     reject({error})
    }
 }
@@ -33,6 +33,31 @@ export const createUser = (userData) => {
  }
   })
 }
+
+
+
+
+export const checkAuth = () => {
+  return new Promise(async(resolve,reject) =>{
+try {
+ const response = await fetch("http://localhost:8080/auth/check");
+ if(response.ok){
+   const data = await response.json()
+    resolve({data})
+ }else{
+  const error = await response.text()
+  reject({error})
+  
+ }
+}
+catch (error) {
+reject({error})
+
+}
+})
+}
+
+
 
 
   export const signOut = (userId) => {

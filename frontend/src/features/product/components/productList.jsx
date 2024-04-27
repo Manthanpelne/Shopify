@@ -128,6 +128,7 @@ export const ProductList = () => {
   },[totalItems,sort])
 
 
+
   useEffect(()=>{
  dispatch(fetchAllBrandsAsync())
  dispatch(fetchAllCategoriesAsync())

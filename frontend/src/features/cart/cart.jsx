@@ -4,7 +4,7 @@ import { Link, Navigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { deleteItemFromCartAsync, selectItems, updateCartAsync } from "./cartSlice"
+import { deleteItemFromCartAsync, selectCartLoaded, selectItems, updateCartAsync } from "./cartSlice"
 import { discountedPrice } from "../../app/constants"
 
 const products = [
@@ -37,6 +37,7 @@ const products = [
     const [open, setOpen] = useState(true)
     const dispatch = useDispatch()
     const items = useSelector(selectItems)
+    const cartLoaded = useSelector(selectCartLoaded)
 
     const totalAmount = items.reduce((amount,item)=>discountedPrice(item.product) * item.quantity + amount, 0)
     const totalItems = items.reduce((total,item)=>item.quantity + total, 0)
@@ -53,7 +54,7 @@ const handleDelete =(e,id)=>{
 
   return (
     <div>
-    {!items.length && <Navigate to="/" replace={true}></Navigate> }
+    {!items.length && cartLoaded && <Navigate to="/" replace={true}></Navigate> }
  <div className="mx-auto mt-12 max-w-5xl px-4 sm:px-6 lg:px-8">
     <div className="border-t bg-white border-gray-200 px-4 py-6 sm:px-6">
                         <div className="flow-root">

@@ -98,9 +98,9 @@ export const ProductDetails=()=> {
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
   const user = useSelector(selectUserInfo)
-  console.log(user)
+  //console.log(user)
   const product = useSelector(selectProductById)
-  console.log(product)
+  //console.log(product)
 
 
   const handleCart=(e)=>{

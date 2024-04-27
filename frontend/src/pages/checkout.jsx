@@ -51,13 +51,13 @@ export const Checkout = () => {
   } = useForm();
 
   const user = useSelector(selectUserInfo)
-  console.log(user)
+  //console.log(user)
 
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch()
   const items = useSelector(selectItems)
   const currentOrder = useSelector(selectCurrentOrder)
-  //console.log("currentOrder" + currentOrder)
+ 
 
   const totalAmount = items.reduce((amount,item)=>discountedPrice(item.product) * item.quantity + amount, 0)
   const totalItems = items.reduce((total,item)=>item.quantity + total, 0)
@@ -93,7 +93,8 @@ const handleOrder = (e)=>{
   return (
     <>
       {!items.length && <Navigate to="/" replace={true}></Navigate> }
-      {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate> }
+      {currentOrder && currentOrder.paymentMethod ==="cash" && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate> }
+      {currentOrder && currentOrder.paymentMethod ==="card" && <Navigate to={`/stripe-checkout/`} replace={true}></Navigate> }
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-5">
         <div className="lg:col-span-3">
