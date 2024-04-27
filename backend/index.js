@@ -69,12 +69,15 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
 
 //middlewares
 app.use(express.json());
+
 app.use(cookies());
 app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"*"
+    origin:["https://shopify-client-seven.vercel.app"],
+    methods:["POST","GET","PATCH","DELETE"],
+    credentials:true
   })
 );
 app.use(
