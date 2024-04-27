@@ -12,6 +12,7 @@ const { isAuth, sanitizeUser, cookieExtractor } = require("./services/common");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const jwt = require("jsonwebtoken");
+const path = require("path")
 
 //const token = jwt.sign({foo:"bar", SECRET_KEY})
 
