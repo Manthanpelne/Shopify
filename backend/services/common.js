@@ -14,6 +14,6 @@ return {id:user.id, role:user.role}
       if(req && req.cookies){
          token = req.cookies["jwt"]
       }
-      token = process.env.token
+      //token = process.env.token
       return token;
    }
