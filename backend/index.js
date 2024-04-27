@@ -69,6 +69,12 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
 
 //middlewares
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.use(cookies());
 app.use(express.static("dist"));
 app.use(
