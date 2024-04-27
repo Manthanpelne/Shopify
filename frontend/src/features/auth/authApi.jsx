@@ -2,6 +2,7 @@ export const createUser = (userData) => {
     return new Promise(async(resolve) =>{
      const response = await fetch("https://shopify-eight-steel.vercel.app/auth/signup",{
       method:"POST",
+      mode:"no-cors",
       body:JSON.stringify(userData),
       headers:{"content-type":"application/json"}
      })
@@ -18,6 +19,7 @@ export const createUser = (userData) => {
    const response = await fetch("https://shopify-eight-steel.vercel.app/auth/login",{
     method:"POST",
     body:JSON.stringify(loginInfo),
+    mode:"no-cors",
     headers:{"content-type":"application/json"}
    })
    if(response.ok){

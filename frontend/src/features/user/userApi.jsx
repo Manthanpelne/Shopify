@@ -25,6 +25,7 @@ export const fetchLoggedInUserOrders = () => {
     return new Promise(async(resolve) =>{
      const response = await fetch("https://shopify-eight-steel.vercel.app/user/"+update.id,{
       method:"PATCH",
+      mode:"no-cors",
       body:JSON.stringify(update),
       headers:{"content-type":"application/json"}
      })

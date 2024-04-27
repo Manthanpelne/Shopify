@@ -20,6 +20,7 @@ export default function StripeCheckout() {
     // Create PaymentIntent as soon as the page loads
     fetch("https://shopify-eight-steel.vercel.app/create-payment-intent", {
       method: "POST",
+      mode:"no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({totalAmount:currentOrder.totalAmount, orderId:currentOrder.id})
     })
