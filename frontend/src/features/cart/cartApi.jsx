@@ -2,7 +2,6 @@ export const addToCart = (item) => {
   return new Promise(async(resolve) =>{
    const response = await fetch("https://shopify-eight-steel.vercel.app/cart",{
     method:"POST",
-    mode:"no-cors",
     body:JSON.stringify(item),
     headers:{"content-type":"application/json"}
    })
@@ -26,7 +25,6 @@ export const updateCart = (update) => {
   return new Promise(async(resolve) =>{
    const response = await fetch("https://shopify-eight-steel.vercel.app/cart/"+update.id,{
     method:"PATCH",
-    mode:"no-cors",
     body:JSON.stringify(update),
     headers:{"content-type":"application/json"}
    })
@@ -40,7 +38,6 @@ export const deleteItemFromCart = (itemId) => {
   return new Promise(async(resolve) =>{
    const response = await fetch("https://shopify-eight-steel.vercel.app/cart/"+itemId,{
     method:"DELETE",
-    mode:"no-cors",
     headers:{"content-type":"application/json"}
    })
    const data = await response.json()

@@ -2,7 +2,6 @@ export const createOrder = (order) => {
   return new Promise(async(resolve) =>{
    const response = await fetch("https://shopify-eight-steel.vercel.app/orders",{
     method:"POST",
-    mode:"no-cors",
     body:JSON.stringify(order),
     headers:{"content-type":"application/json"}
    })
@@ -37,7 +36,6 @@ export const updateOrder = (order) => {
   return new Promise(async(resolve) =>{
    const response = await fetch("https://shopify-eight-steel.vercel.app/orders/"+order.id,{
     method:"PATCH",
-    mode:"no-cors",
     body:JSON.stringify(order),
     headers:{"content-type":"application/json"}
    })
