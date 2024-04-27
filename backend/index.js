@@ -74,10 +74,7 @@ app.use(cookies());
 app.use(express.static("dist"));
 app.use(
   cors({
-    exposedHeaders: ["X-Total-Count"],
-    origin:["https://shopify-client-seven.vercel.app"],
-    methods:["POST","GET","PATCH","DELETE"],
-    credentials:true
+    exposedHeaders: ["X-Total-Count"]
   })
 );
 app.use(
