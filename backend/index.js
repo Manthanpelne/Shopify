@@ -194,6 +194,12 @@ app.post("/create-payment-intent", async (req, res) => {
 
 
 
+app.get("/",(req,res)=>{
+  res.send("data data")
+})
+
+
+
 
 app.listen(8080, async () => {
   await Connection;
