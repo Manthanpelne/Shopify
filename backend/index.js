@@ -76,7 +76,8 @@ app.use(cookies());
 app.use(express.static("dist"));
 app.use(
   cors({
-    exposedHeaders: ["X-Total-Count"]
+    exposedHeaders: ["X-Total-Count"],
+    origin:"https://shopify-client-seven.vercel.app"
   })
 );
 app.use(
@@ -202,8 +203,9 @@ app.get("/",(req,res)=>{
 
 
 
+const port = process.env.PORT || 3000;
 
-app.listen(8080, async () => {
+app.listen(port, async () => {
   await Connection;
-  console.log("server connected at port:8080");
+  console.log(`server connected at port:${port}`);
 });
