@@ -74,17 +74,12 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
 app.use(express.json());
 app.use(cookies());
 //app.use(express.static("dist"));
-const corsOption = {
-  origin:"*",
-  optionsSucessStatus:"200"
-}
 app.use(
-  cors(corsOption,{
+  cors({
     exposedHeaders: ["X-Total-Count"],
-  }),
+    origin:"*"
+  })
 );
-
-
 app.use(
   session({
     secret: process.env.session_secret,
