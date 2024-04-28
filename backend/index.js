@@ -77,6 +77,12 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, OPTIONS, DELETE');
 
 //---- other code
+//Preflight CORS handler
+  if(req.method === 'OPTIONS') {
+      return res.status(200).json(({
+          body: "OK"
+      }))
+  }
   next();
 }) 
 
