@@ -1,6 +1,13 @@
 export const fetchAllProducts = () => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-eight-steel.vercel.app/product")
+     const response = await fetch("https://shopify-eight-steel.vercel.app/product",{
+      headers:{"content-type":"application/json",
+      "Access-Control-Allow-Origin":"*",
+      "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
+      "Access-Control-Allow-Headers":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+      "Access-Control-Allow-Credentials":"true"
+    }
+     })
      const data = await response.json()
      resolve({data})
 }
@@ -10,7 +17,14 @@ export const fetchAllProducts = () => {
 
   export const fetchAllProductsById = (id) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-eight-steel.vercel.app/product/"+id)
+     const response = await fetch("https://shopify-eight-steel.vercel.app/product/"+id,{
+      headers:{"content-type":"application/json",
+      "Access-Control-Allow-Origin":"*",
+      "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
+      "Access-Control-Allow-Headers":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+      "Access-Control-Allow-Credentials":"true"
+    }
+     })
      const data = await response.json()
      resolve({data})
 }
@@ -24,7 +38,12 @@ export const fetchAllProducts = () => {
      const response = await fetch("https://shopify-eight-steel.vercel.app/product/",{
       method:"POST",
       body:JSON.stringify(product),
-      headers:{"content-type":"application/json"}
+      headers:{"content-type":"application/json",
+      "Access-Control-Allow-Origin":"*",
+      "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
+      "Access-Control-Allow-Headers":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+      "Access-Control-Allow-Credentials":"true"
+    }
      })
      const data = await response.json()
      resolve({data})
@@ -39,7 +58,12 @@ export const fetchAllProducts = () => {
      const response = await fetch("https://shopify-eight-steel.vercel.app/product/"+update.id,{
       method:"PATCH",
       body:JSON.stringify(update),
-      headers:{"content-type":"application/json"}
+      headers:{"content-type":"application/json",
+      "Access-Control-Allow-Origin":"*",
+      "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
+      "Access-Control-Allow-Headers":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+      "Access-Control-Allow-Credentials":"true"
+    }
      })
      const data = await response.json()
      resolve({data})
@@ -74,7 +98,14 @@ export const fetchAllProducts = () => {
     }
     //console.log(queryString)
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-eight-steel.vercel.app/product?"+queryString)
+     const response = await fetch("https://shopify-eight-steel.vercel.app/product?"+queryString,{
+      headers:{"content-type":"application/json",
+      "Access-Control-Allow-Origin":"*",
+      "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
+      "Access-Control-Allow-Headers":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+      "Access-Control-Allow-Credentials":"true"
+    }
+     })
      const data = await response.json()
      //console.log(data)
      const totalItems = response.headers.get('X-Total-Count');
@@ -86,7 +117,14 @@ export const fetchAllProducts = () => {
 //fetch using category
 export const fetchAllCategories = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-eight-steel.vercel.app/category")
+   const response = await fetch("https://shopify-eight-steel.vercel.app/category",{
+    headers:{"content-type":"application/json",
+    "Access-Control-Allow-Origin":"*",
+    "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
+    "Access-Control-Allow-Headers":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+    "Access-Control-Allow-Credentials":"true"
+  }
+   })
    const data = await response.json()
    resolve({data})
 }
@@ -96,7 +134,14 @@ export const fetchAllCategories = () => {
 //fetch using category
 export const fetchAllBrands = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-eight-steel.vercel.app/brand")
+   const response = await fetch("https://shopify-eight-steel.vercel.app/brand",{
+    headers:{"content-type":"application/json",
+    "Access-Control-Allow-Origin":"*",
+    "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
+    "Access-Control-Allow-Headers":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+    "Access-Control-Allow-Credentials":"true"
+  }
+   })
    const data = await response.json()
    resolve({data})
 }
