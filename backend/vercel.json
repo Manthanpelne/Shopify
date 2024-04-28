@@ -14,7 +14,12 @@
       },
       {
         "src": "/(.*)",
-        "dest": "/"
+        "dest": "/",
+         "methods":["POST", "GET", "PATCH", "DELETE", "OPTIONS"],
+         "headers":{
+          "Access-Control-Allow-Origin":"*"
+         }
+
     },
       {
         "src": "/product",
