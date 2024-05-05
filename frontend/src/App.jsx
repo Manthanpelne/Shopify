@@ -32,13 +32,14 @@ import { AdminProductFormPage } from './pages/adminProductFormPage';
 import AdminOrderPage from './pages/adminOrderPage';
 import StripeCheckout from './pages/stripeCheckout';
 import { Home } from './pages/home';
+import { ProductListPage } from './pages/productListPage';
 
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/products",
     element: 
-       <ProductList/>
+       <ProductListPage/>
   },
   {
     path: "/login",
@@ -93,7 +94,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path:"/admin",
+    path:"/admin-productsPage",
     element:<ProtectedAdmin>
       <AdminProductList/>
     </ProtectedAdmin> 
@@ -133,7 +134,7 @@ const router = createBrowserRouter([
     </Protected> 
   },
  {
-  path:"/home",
+  path:"/",
   element: <Home/>
  }
 

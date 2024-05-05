@@ -18,7 +18,7 @@ export default function StripeCheckout() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("https://shopify-eight-steel.vercel.app/create-payment-intent", {
+    fetch("http://localhost:8080/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({totalAmount:currentOrder.totalAmount, orderId:currentOrder.id})
@@ -36,7 +36,7 @@ export default function StripeCheckout() {
   };
 
   return (
-    <div className="App">
+    <div className="Stripe">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />

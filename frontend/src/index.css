@@ -22,6 +22,8 @@
 }
 
 body{
+    width: 97%;
+    margin: auto;
     background-color: rgb(241, 238, 238)
 }
 
@@ -41,6 +43,7 @@ body{
   .button, .button__icon, .button__text {
     transition: all 0.3s;
   }
+
   
   .button .button__text {
     transform: translateX(35px);

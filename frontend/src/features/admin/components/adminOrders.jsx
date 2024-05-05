@@ -51,7 +51,7 @@ export const AdminOrders = () => {
   };
 
   const handleSort = (sortOption) => {
-    const sort = { _sort: sortOption.sort, order: sortOption.order };
+    const sort = { _sort: sortOption.sort, _order: sortOption.order };
     console.log({ sort });
     setSort(sort);
   };
@@ -84,12 +84,13 @@ export const AdminOrders = () => {
                       className="py-3 px-6 text-left"
                       onClick={(e) =>
                         handleSort({
-                          sort: sort?._sort === "id" ? "-id" : "id",
+                          sort: 'id',
+                        order: sort?._order === 'asc' ? 'desc' : 'asc',
                         })
                       }
                     >
                       Order NO. {"  "}
-                      {sort._sort === "id" ? (
+                      {sort._sort === "id" && sort._order === 'asc' ? (
                         <ArrowUpIcon className="w-4 h-4 inline cursor-pointer"></ArrowUpIcon>
                       ) : (
                         <ArrowDownIcon className="w-4 h-4 inline cursor-pointer"></ArrowDownIcon>
@@ -100,15 +101,13 @@ export const AdminOrders = () => {
                       className="py-3 px-6 text-center"
                       onClick={(e) =>
                         handleSort({
-                          sort:
-                            sort?._sort === "totalAmount"
-                              ? "-totalAmount"
-                              : "totalAmount",
+                          sort: 'totalAmount',
+                        order: sort?._order === 'asc' ? 'desc' : 'asc',
                         })
                       }
                     >
                       Total Amount{" "}
-                      {sort._sort === "totalAmount" ? (
+                      {sort._sort === "totalAmount" && sort._order === 'asc'? (
                         <ArrowUpIcon className="w-4 h-4 inline cursor-pointer"></ArrowUpIcon>
                       ) : (
                         <ArrowDownIcon className="w-4 h-4 inline cursor-pointer"></ArrowDownIcon>

@@ -54,7 +54,7 @@ const handleDelete =(e,id)=>{
 
   return (
     <div>
-    {!items.length && cartLoaded && <Navigate to="/" replace={true}></Navigate> }
+    {!items.length && cartLoaded && <Navigate to="/products" replace={true}></Navigate> }
  <div className="mx-auto mt-12 max-w-5xl px-4 sm:px-6 lg:px-8">
     <div className="border-t bg-white border-gray-200 px-4 py-6 sm:px-6">
                         <div className="flow-root">

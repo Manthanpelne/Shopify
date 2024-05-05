@@ -1,30 +1,61 @@
 import React, { useState } from "react";
 import { NavLinks } from "./navlinks";
 import { SearchBar } from "./searchBar";
+import { Fragment } from 'react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import {
+  Bars3Icon,
+  ShoppingCartIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectItems } from "../cart/cartSlice";
+import { selectLoggedInUser } from '../auth/authSlice';
+import { selectUserInfo } from '../user/userSlice';
+
+
+const navigation = [
+  { name: 'Products', link: '/products', user: true },
+  { name: 'Products', link: '/admin-productsPage', admin: true },
+  { name: 'Orders', link: '/admin/orders', admin: true },
+
+];
+const userNavigation = [
+  { name: 'My Profile', link: '/user-profile' },
+  { name: 'My Orders', link: '/myOrders' },
+  { name: 'Sign out', link: '/logout' },
+];
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
 
 
 export const NavBar = ({children}) => {
     const [open, setOpen] = useState(false)
+    const items = useSelector(selectItems);
+    const userInfo = useSelector(selectUserInfo);
+    console.log(userInfo)
+  
   return (
     <div>
       <div>
         <div className="flex bg-zinc-400 justify-between">
           <div>
-            <img
-              className="h-12 w-17 sm: pl-7"
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATQAAACkCAMAAAAuTiJaAAAAflBMVEUAAAD////8/PwEBATi4uKkpKT29vba2tre3t75+fnt7e2cnJzo6Oh6enowMDC9vb1QUFDJyck9PT21tbVcXFxsbGwiIiJPT09mZmbV1dWurq43NzdFRUWRkZHCwsLPz8+IiIgUFBSCgoJ1dXUcHBwoKCgTExM7OzteXl6YmJiA6yXRAAAErUlEQVR4nO3da3OiMBQGYJJwESxV0HrFSrV1t///D25CABOUFbfMxuD7fNm203FOz+RycoF1HAAAAAAAAAAAAAAAAAAAAAAAAAAAALDb2PVHO9NB2CX1ifCyMB2ITaIiZ5S4pgOxyI6QMmux6VDssSaVd9Oh2MOtk7Y3HYo9kjppM9Oh2GPHRzM5ps1Nh2KP12oemJiOxCYTQkVbQ87uwZtaOPGWjsNMR2ITPn++mo7BOhNCpqZjsM6IENMh2Icv1k2HYBnmTAlZm47CMswZo9y42yKkZGM6CNvkvLBNTAdhF1Ys2LFUv1PIkzY2HYRlvsRa/c10FJbxeEMLTAdhG9E7Y6zV7yP20lLTQVhGbEH6poOwzRjbj90wZ3GIP+U4Js6isC/UhWhe8mj4U3z1YToeG3ji/IkSj38Z85xFpuOxQVofdDqZjyGtG688s6MkDnFG3NGsamjykLjopnBDXidNZu1oOiAruFUbk6kzHY4lAiVnGNI62qhJW5qOxg6p2jsJrtp28DXWcoYbCR1klOhJW5mOyAIj0oAy7aZDM2e4CX+bf5E09M9bvMucoandkIZXkoYLyn/3QumVpOFZsnasmAUocZuZw/n636zlEJY3KjUUHa2Y3EgTt6rWekvDkr2dLNHEKcoKSevoi1SnKXxC0JKGK32t1kpNFmMi6IA5R7G77Z7kt6mWtNxkZA9NPHR9Pqxz1aThhL3FkQ9ob+p3ZxT3rFqMCDlUX58SrXdi7XkVE8d25+uO2hEBtzUY2gOLtXu1jdoWz67rmHyIs5g5zz8N9JxR7HNomEhZlhRrzfNPmy2NkNBYhA9p45KQKEnjWVxebqrhtpWCp+gr/SaB785DKvtg2e70DupjS033+r399F8dNi8uPH5EF82sGNZC7A81sPrf1dX9bpm23GSIj6hMW17fr7qSNTJa4I0JTax+gVWbEKvQBnaxzX05I+DJsqbGfm34fuXgGO9Q0zF9OPP46DVuTqXiN7CPW2LORx6ovXFTPnCxzRtrKi5CH5WmWqmRyDtpcqbMJqE2utFisxKz6MKjSkpGF8vzg37Qwhvb06/gFzN1ogyuXhJaJdqFb/rsB8hjtZWt25tQdpy5anIXT9pF+V89j5RJc5aVu0Vt0v25uYW//1ucD8ZTepzfpd5fKlXIc259nNR6IukyJbLibWqVZ3zx7a+65OfNrPsTUMrxu/t0w1qm1GazeyqvNKpzHT3VUwbM+RXWc+b+3kO693oapbEj8/0UbW7rV7NmML3zT+a//LavMl48pJdOBr9pdBJn6XWd8Y9l6rH6gM1vZxd8Fj/LTv0F+XACJ5iV/cuf/2vP2r5UvTuSj4RmAQkHexjPnPd1WZqR9U+Gos1LWRhHQZDsR8OuQXbVo8ObzQ8H8FXxQXVPH/B7FaaRbGZeD31pVWeMDvfNkdN4Qkko3lUibqP1UCYsz7Ve/vNPe0Tfdaugvb0DofjvCsTN06ynD3ww83NfCsc9VaNMrvlpPtjyNqrKeNLntg7/UHfAqyl5aTsUmzo9NotvcetvoM1MyNY0yZy053ZxuP0rFhtwcwAAAAAAAAAAAAAAAAAAAAAAAAAAgEH7A6KLIlS4zbJsAAAAAElFTkSuQmCC"
-              alt=""
-            />
+            <Link to="/">
+          <p className="font-semibold ml-12 mt-4">Shopify</p>
+            </Link>
           </div>
           <div className="text-black sm:flex hidden justify-evenly space-x-9 m-4 mr-20">
             <p>Find a store</p>
             <p>Help</p>
             <p>Join Us</p>
-            <p>Sign in</p>
+            <Link to="/signup"><p>Sign in</p></Link>
           </div>
           <p className="md:hidden mt-3 px-11">Sign In</p>
         </div>
-        <div className="flex justify-between h-14 bg-gray-700">
+        <div className="flex justify-around h-20 bg-gray-700">
           <div className="z-50 md:w-auto w-full flex justify-between">
              <div className="p-3 cursor-pointer hover:bg-slate-700 rounded-lg md:hidden text-3xl" onClick={()=>setOpen(!open)}>
           <ion-icon name={`${open?"close":"menu"}`}></ion-icon>
@@ -43,6 +74,202 @@ export const NavBar = ({children}) => {
             </ul>
 
       </div>
+      {userInfo &&<div className="min-h-full">
+        <Disclosure as="nav" className="bg-gray-800">
+          {({ open }) => (
+            <>
+              <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+                <div className="flex h-16 items-center justify-between">
+                  <div className="flex items-center">
+                   
+                    <div className="hidden md:block">
+                      <div className="ml-10 flex items-baseline space-x-4">
+                        {navigation.map((item) =>
+                          item[userInfo.role] ? (
+                            <Link
+                              key={item.name}
+                              to={item.link}
+                              className={classNames(
+                                item.current
+                                  ? 'bg-gray-900 text-white'
+                                  : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                'rounded-md px-3 py-2 text-sm font-medium'
+                              )}
+                              aria-current={item.current ? 'page' : undefined}
+                            >
+                              {item.name}
+                            </Link>
+                          ) : null
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-center mr-12">
+                      <h1 className="text-white">Shop, Celebrate & Customize with us.</h1>
+                      <p className="text-gray-200 font-bold">40% OFF on Accessories</p>
+                    </div>
+                  <div className="hidden md:block">
+                    <div className="ml-4 flex items-center md:ml-6">
+                      <Link to="/cart">
+                        <button
+                          type="button"
+                          className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        >
+                          <span className="sr-only">View notifications</span>
+                          <ShoppingCartIcon
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        </button>
+                      </Link>
+                      {items.length > 0 && (
+                        <span className="inline-flex items-center rounded-md mb-7 -ml-3 bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                          {items.length}
+                        </span>
+                      )}
+
+                      {/* Profile dropdown */}
+                      <Menu as="div" className="relative ml-3">
+                        <div>
+                          <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <span className="sr-only">Open user menu</span>
+                            <img
+                              className="h-8 w-8 rounded-full"
+                              src="https://th.bing.com/th/id/OIP.1mSyfMp-r01kxBYitbubbAHaHa?w=199&h=206&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                              alt=""
+                            />
+                          </Menu.Button>
+                        </div>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            {userNavigation.map((item) => (
+                              <Menu.Item key={item.name}>
+                                {({ active }) => (
+                                  <Link
+                                    to={item.link}
+                                    className={classNames(
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700'
+                                    )}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                )}
+                              </Menu.Item>
+                            ))}
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </div>
+                  </div>
+                  <div className="-mr-2 flex md:hidden">
+                    {/* Mobile menu button */}
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <span className="sr-only">Open main menu</span>
+                      {open ? (
+                        <XMarkIcon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <Bars3Icon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </Disclosure.Button>
+                  </div>
+                </div>
+              </div>
+
+              <Disclosure.Panel className="md:hidden">
+                <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                  {navigation.map((item) => (
+                    <Disclosure.Button
+                      key={item.name}
+                      as="a"
+                      href={item.href}
+                      className={classNames(
+                        item.current
+                          ? 'bg-gray-900 text-white'
+                          : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        'block rounded-md px-3 py-2 text-base font-medium'
+                      )}
+                      aria-current={item.current ? 'page' : undefined}
+                    >
+                      {item.name}
+                    </Disclosure.Button>
+                  ))}
+                </div>
+                <div className="border-t border-gray-700 pb-3 pt-4">
+                  <div className="flex items-center px-5">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src="https://th.bing.com/th/id/OIP.1mSyfMp-r01kxBYitbubbAHaHa?w=199&h=206&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                        alt=""
+                      />
+                    </div>
+                    <div className="ml-3">
+                      <div className="text-base font-medium leading-none text-white">
+                        {/* this should come from userInfo */}
+                        {userInfo.name}
+                      </div>
+                      <div className="text-sm font-medium leading-none text-gray-400">
+                        {userInfo.email}
+                      </div>
+                    </div>
+                    
+                    <Link to="/cart">
+                      <button
+                        type="button"
+                        className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      >
+                        <ShoppingCartIcon
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </Link>
+                    {items.length > 0 && (
+                      <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        {items.length}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-3 space-y-1 px-2">
+                    {userNavigation.map((item) => (
+                      <Disclosure.Button
+                        key={item.name}
+                        as="a"
+                        href={item.href}
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+                    ))}
+                  </div>
+                </div>
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+
+        
+        <main>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            {children}
+          </div>
+        </main>
+      </div>}
     </div>
   );
 };

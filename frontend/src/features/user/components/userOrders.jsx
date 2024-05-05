@@ -22,7 +22,7 @@ dispatch(fetchLoggedInUserOrdersAsync())
 
   return (
     <div>
-   <h1>Items ordered</h1>
+ <h1 className="bg-gray-700 text-white m-4 p-2 text-[12px] mt-3">MY ORDERS</h1>
    {orders && orders.map((item)=>(
     <div>
      <div className="mx-auto mt-10 max-w-5xl px-4 sm:px-6 lg:px-8">
