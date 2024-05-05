@@ -1,6 +1,6 @@
 export const fetchAllProducts = () => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("http://localhost:8080/product")
+     const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/product")
      const data = await response.json()
      resolve({data})
 }
@@ -10,7 +10,7 @@ export const fetchAllProducts = () => {
 
   export const fetchAllProductsById = (id) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("http://localhost:8080/product/"+id)
+     const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/product/"+id)
      const data = await response.json()
      resolve({data})
 }
@@ -21,7 +21,7 @@ export const fetchAllProducts = () => {
   
   export const createProduct = (product) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("http://localhost:8080/product/",{
+     const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/product/",{
       method:"POST",
       body:JSON.stringify(product),
       headers:{"content-type":"application/json"}
@@ -36,7 +36,7 @@ export const fetchAllProducts = () => {
 
   export const updateProduct = (update) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("http://localhost:8080/product/"+update.id,{
+     const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/product/"+update.id,{
       method:"PATCH",
       body:JSON.stringify(update),
       headers:{"content-type":"application/json"}
@@ -74,7 +74,7 @@ export const fetchAllProducts = () => {
     }
     //console.log(queryString)
     return new Promise(async(resolve) =>{
-     const response = await fetch("http://localhost:8080/product?"+queryString)
+     const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/product?"+queryString)
      const data = await response.json()
      //console.log(data)
      const totalItems = response.headers.get('X-Total-Count');
@@ -86,7 +86,7 @@ export const fetchAllProducts = () => {
 //fetch using category
 export const fetchAllCategories = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("http://localhost:8080/category")
+   const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/category")
    const data = await response.json()
    resolve({data})
 }
@@ -96,7 +96,7 @@ export const fetchAllCategories = () => {
 //fetch using category
 export const fetchAllBrands = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("http://localhost:8080/brand")
+   const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/brand")
    const data = await response.json()
    resolve({data})
 }
