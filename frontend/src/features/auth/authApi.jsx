@@ -1,6 +1,6 @@
 export const createUser = (userData) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/auth/signup",{
+     const response = await fetch("https://blue-aware-gazelle.cyclic.app/auth/signup",{
       method:"POST",
       body:JSON.stringify(userData),
       headers:{"content-type":"application/json"}
@@ -15,7 +15,7 @@ export const createUser = (userData) => {
   export const loginUser = (loginInfo) => {
     return new Promise(async(resolve,reject) =>{
  try {
-   const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/auth/login",{
+   const response = await fetch("https://blue-aware-gazelle.cyclic.app/auth/login",{
     method:"POST",
     body:JSON.stringify(loginInfo),
     headers:{"content-type":"application/json"}
@@ -40,7 +40,7 @@ export const createUser = (userData) => {
 export const checkAuth = () => {
   return new Promise(async(resolve,reject) =>{
 try {
- const response = await fetch("https://rich-cyan-octopus-fez.cyclic.app/auth/check");
+ const response = await fetch("https://blue-aware-gazelle.cyclic.app/auth/check");
  if(response.ok){
    const data = await response.json()
     resolve({data})
