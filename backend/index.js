@@ -78,7 +78,7 @@ app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"https://main--glittery-pastelito-6d7bd8.netlify.app/"
+    origin:"*"
   })
 );
 app.use(
