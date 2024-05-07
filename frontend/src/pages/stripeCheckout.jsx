@@ -18,7 +18,7 @@ export default function StripeCheckout() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("https://blue-aware-gazelle.cyclic.app/create-payment-intent", {
+    fetch("https://shopify-server-six.vercel.app/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({totalAmount:currentOrder.totalAmount, orderId:currentOrder.id})

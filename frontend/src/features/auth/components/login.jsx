@@ -21,7 +21,7 @@ export const Login = () => {
 
   return (
     <>
-    {user && <Navigate to="/" replace={true}></Navigate> }
+    {/* {user && <Navigate to="/" replace={true}></Navigate> } */}
     <div>
       <main className="w-full flex">
         <div className="relative flex-1 hidden items-center justify-center h-screen lg:flex">
