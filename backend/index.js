@@ -102,8 +102,8 @@ app.use("/auth", authRouter.router);
 app.use("/cart", isAuth(), cartRouter.router);
 app.use("/orders", isAuth(), orderRouter.router);
 
-app.get('*', (req, res) =>
-  res.sendFile(path.resolve('dist', 'index.html'))
+app.get('*', (_, res) =>
+  res.sendFile(path.join(__dirname,"./dist/assets/index.html"))
 );
 
 
