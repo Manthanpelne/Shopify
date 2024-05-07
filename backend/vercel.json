@@ -1,18 +1,90 @@
 {
     "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "build/**",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
         {
-            "src": "index.js",
-            "use": "@vercel/node"
+            "src": "/(.*)",
+            "dest": "index.js"
         },
         {
-            "src": "dist/**",
-            "use": "@vercel/static"
-        }
-    ],
-    "rewrites": [
+          "src": "/product",
+          "dest": "index.js"
+        },
         {
-            "source": "/(.*)",
-            "destination": "index.js"
+          "src": "/product/(.*)",
+          "dest": "index.js"
+        },
+        {
+          "src": "/category",
+          "dest": "index.js"
+        },
+        {
+          "src": "/category/(.*)",
+          "dest": "index.js"
+        },
+        {
+          "src": "/brand",
+          "dest": "index.js"
+        },
+        {
+          "src": "/brand/(.*)",
+          "dest": "index.js"
+        },
+        {
+          "src": "/user",
+          "dest": "index.js"
+        },
+        {
+          "src": "/user/(.*)",
+          "dest": "index.js"
+        },
+        {
+          "src": "/auth",
+          "dest": "index.js"
+        },
+        {
+          "src": "/auth/(.*)",
+          "dest": "index.js"
+        },
+        {
+          "src": "/cart",
+          "dest": "index.js"
+        },
+        {
+          "src": "/cart/(.*)",
+          "dest": "index.js"
+        },
+        {
+          "src": "/orders",
+          "dest": "index.js"
+        },
+        {
+          "src": "/orders/(.*)",
+          "dest": "index.js"
+        },
+        {
+          "src": "/webhook",
+          "dest": "index.js"
+        },
+        {
+          "src": "/create-payment-intent",
+          "dest": "index.js"
+        },
+        {
+          "src": "/",
+          "dest": "dest/index.html"
+        },
+        {
+          "src": "/(.+)",
+          "dest": "dest/$1"
         }
     ]
-}
+  }

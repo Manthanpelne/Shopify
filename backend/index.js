@@ -74,7 +74,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
 app.use(express.json());
 app.use(cookies());
 app.use(express.static(path.resolve(__dirname, 'dist')));
-//app.use(express.static("dist"));
+app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
@@ -102,9 +102,9 @@ app.use("/auth", authRouter.router);
 app.use("/cart", isAuth(), cartRouter.router);
 app.use("/orders", isAuth(), orderRouter.router);
 
-app.get('*', (_, res) =>
-  res.sendFile(path.join(__dirname,"./dist/assets/index.html"))
-);
+// app.get('*', (req, res) =>
+//   res.sendFile(path.resolve('build', 'index.html'))
+// );
 
 
 
