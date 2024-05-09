@@ -77,12 +77,14 @@ app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"*"
+    origin:"https://663c94efa087b4861b92dce5--lighthearted-paprenjak-ada158.netlify.app",
+    credentials:true,
+    preflightContinue: true
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS"),
+  res.setHeader("Access-Control-Allow-Origin", "https://663c94efa087b4861b92dce5--lighthearted-paprenjak-ada158.netlify.app");
+  res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, PATCH, OPTIONS"),
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept",
