@@ -18,7 +18,7 @@ export default function StripeCheckout() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("https://shopify-server-mu.vercel.app/create-payment-intent", {
+    fetch("https://shopify-psi-opal.vercel.app/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({totalAmount:currentOrder.totalAmount, orderId:currentOrder.id})
