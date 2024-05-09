@@ -1,6 +1,6 @@
 export const fetchLoggedInUserOrders = () => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-six-kappa.vercel.app/orders/own/")
+     const response = await fetch("/orders/own/")
      const data = await response.json()
      console.log(data)
      resolve({data})
@@ -12,7 +12,7 @@ export const fetchLoggedInUserOrders = () => {
   export const fetchLoggedInUser = () => {
     return new Promise(async(resolve) =>{
       try {
-        const response = await fetch("https://shopify-six-kappa.vercel.app/user/own")
+        const response = await fetch("/user/own")
          const data = await response.json()
           resolve({data})
       } catch (error) {
@@ -25,7 +25,7 @@ export const fetchLoggedInUserOrders = () => {
 
   export const updateUser = (update) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-six-kappa.vercel.app/user/"+update.id,{
+     const response = await fetch("/user/"+update.id,{
       method:"PATCH",
       body:JSON.stringify(update),
       headers:{"content-type":"application/json"}
