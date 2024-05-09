@@ -84,13 +84,13 @@ app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"https://flourishing-granita-72b0a1.netlify.app",
+    origin:"https://663d29cede57fe48592aa362--flourishing-granita-72b0a1.netlify.app",
     credentials:true,
     preflightContinue: true
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://flourishing-granita-72b0a1.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", "https://663d29cede57fe48592aa362--flourishing-granita-72b0a1.netlify.app");
   res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, PATCH, OPTIONS"),
   res.header(
     "Access-Control-Allow-Headers",
