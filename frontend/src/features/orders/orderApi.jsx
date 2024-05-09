@@ -1,6 +1,6 @@
 export const createOrder = (order) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-steel-zeta.vercel.app/orders",{
+   const response = await fetch("http://localhost:8080/orders",{
     method:"POST",
     body:JSON.stringify(order),
     headers:{"content-type":"application/json"}
@@ -22,7 +22,7 @@ export const fetchAllOrders = (sort,pagination) => {
     }
     //console.log(queryString)
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-steel-zeta.vercel.app/orders/?"+queryString)
+     const response = await fetch("http://localhost:8080/orders/?"+queryString)
      const data = await response.json()
      console.log(data)
      const totalOrders = response.headers.get('X-Total-Count');
@@ -34,7 +34,7 @@ export const fetchAllOrders = (sort,pagination) => {
 
 export const updateOrder = (order) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-steel-zeta.vercel.app/orders/"+order.id,{
+   const response = await fetch("http://localhost:8080/orders/"+order.id,{
     method:"PATCH",
     body:JSON.stringify(order),
     headers:{"content-type":"application/json"}

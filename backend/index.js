@@ -14,7 +14,7 @@ const jwt = require("jsonwebtoken");
 const path = require("path")
 require("dotenv").config();
 
-//const token = jwt.sign({foo:"bar", SECRET_KEY})
+
 
 //jwt options
 const opts = {};

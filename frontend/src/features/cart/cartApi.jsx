@@ -1,6 +1,6 @@
 export const addToCart = (item) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-steel-zeta.vercel.app/cart",{
+   const response = await fetch("http://localhost:8080/cart",{
     method:"POST",
     body:JSON.stringify(item),
     headers:{"content-type":"application/json"}
@@ -13,17 +13,27 @@ export const addToCart = (item) => {
 
 export const fetchItemsByUserId = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-steel-zeta.vercel.app/cart")
-   const data = await response.json()
-   resolve({data})
-}
-  )
+    try {  
+      const response = await fetch("http://localhost:8080/cart")
+      if(response.ok){
+       const data = await response.json()
+        resolve({data})
+     }else{
+      const error = await response.text()
+      reject({error})
+      console.log(error)
+     }
+    } catch (error) {
+     reject({error})
+     console.log(error)
+    }
+  })
 }
 
 
 export const updateCart = (update) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-steel-zeta.vercel.app/cart/"+update.id,{
+   const response = await fetch("http://localhost:8080/cart/"+update.id,{
     method:"PATCH",
     body:JSON.stringify(update),
     headers:{"content-type":"application/json"}
@@ -36,7 +46,7 @@ export const updateCart = (update) => {
 
 export const deleteItemFromCart = (itemId) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-steel-zeta.vercel.app/cart/"+itemId,{
+   const response = await fetch("http://localhost:8080/cart/"+itemId,{
     method:"DELETE",
     headers:{"content-type":"application/json"}
    })
