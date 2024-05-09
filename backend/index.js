@@ -77,13 +77,13 @@ app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"https://shopify-six-kappa.vercel.app",
+    origin:"*",
     credentials:true,
     preflightContinue: true
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://shopify-six-kappa.vercel.app");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, PATCH, OPTIONS"),
   res.header(
     "Access-Control-Allow-Headers",
