@@ -31,6 +31,13 @@ const orderRouter = require("./routes/order");
 const { User } = require("./models/user");
 
 
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 
 //webhook
