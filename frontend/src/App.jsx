@@ -69,7 +69,10 @@ const router = createBrowserRouter([
 
   {
     path: "/order-success/:id",
-    element:<OrderSuccessPage/>
+    element:
+    <Protected>
+      <OrderSuccessPage/>
+    </Protected>
   },
   {
     path: "/myOrders",
