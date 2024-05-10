@@ -1,6 +1,6 @@
 export const fetchAllProducts = () => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-mu-blush.vercel.app/product")
+     const response = await fetch("/product")
      const data = await response.json()
      resolve({data})
 }
@@ -10,7 +10,7 @@ export const fetchAllProducts = () => {
 
   export const fetchAllProductsById = (id) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-mu-blush.vercel.app/product/"+id)
+     const response = await fetch("/product/"+id)
      const data = await response.json()
      resolve({data})
 }
@@ -21,7 +21,7 @@ export const fetchAllProducts = () => {
   
   export const createProduct = (product) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-mu-blush.vercel.app/product/",{
+     const response = await fetch("/product/",{
       method:"POST",
       body:JSON.stringify(product),
       headers:{"content-type":"application/json"}
@@ -36,7 +36,7 @@ export const fetchAllProducts = () => {
 
   export const updateProduct = (update) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-mu-blush.vercel.app/product/"+update.id,{
+     const response = await fetch("/product/"+update.id,{
       method:"PATCH",
       body:JSON.stringify(update),
       headers:{"content-type":"application/json"}
@@ -74,7 +74,7 @@ export const fetchAllProducts = () => {
     }
     //console.log(queryString)
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-mu-blush.vercel.app/product?"+queryString)
+     const response = await fetch("/product?"+queryString)
      const data = await response.json()
      //console.log(data)
      const totalItems = response.headers.get('X-Total-Count');
@@ -86,7 +86,7 @@ export const fetchAllProducts = () => {
 //fetch using category
 export const fetchAllCategories = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-mu-blush.vercel.app/category")
+   const response = await fetch("/category")
    const data = await response.json()
    resolve({data})
 }
@@ -96,7 +96,7 @@ export const fetchAllCategories = () => {
 //fetch using category
 export const fetchAllBrands = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-mu-blush.vercel.app/brand")
+   const response = await fetch("/brand")
    const data = await response.json()
    resolve({data})
 }
