@@ -3,7 +3,7 @@ const app = express();
 const { Connection } = require("./db");
 const cors = require("cors");
 const cookies = require("cookie-parser");
-const session = require("express-session")
+const session = require("cookie-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
@@ -13,7 +13,6 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const jwt = require("jsonwebtoken");
 const path = require("path")
 require("dotenv").config();
-
 
 const MemoryStore = require('memorystore')(session)
 
@@ -96,13 +95,13 @@ app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"https://663d29cede57fe48592aa362--flourishing-granita-72b0a1.netlify.app",
+    origin:"https://663db5091ecee8b3c887bb89--cool-lokum-97b240.netlify.app",
     credentials:true,
     preflightContinue: true
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://663d29cede57fe48592aa362--flourishing-granita-72b0a1.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", "https://663db5091ecee8b3c887bb89--cool-lokum-97b240.netlify.app");
   res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, PATCH, OPTIONS"),
   res.header(
     "Access-Control-Allow-Headers",
@@ -133,9 +132,9 @@ app.use("/auth", authRouter.router);
 app.use("/cart", isAuth(), cartRouter.router);
 app.use("/orders", isAuth(), orderRouter.router);
 
-// app.get('*', (req, res) =>
-//   res.sendFile(path.resolve('build', 'index.html'))
-// );
+app.get('*', (req, res) =>
+  res.sendFile(path.resolve('build', 'index.html'))
+);
 
 
 
