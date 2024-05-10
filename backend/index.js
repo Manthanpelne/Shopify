@@ -95,13 +95,13 @@ app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"https://663db5091ecee8b3c887bb89--cool-lokum-97b240.netlify.app",
+    origin:"*",
     credentials:true,
     preflightContinue: true
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://663db5091ecee8b3c887bb89--cool-lokum-97b240.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, PATCH, OPTIONS"),
   res.header(
     "Access-Control-Allow-Headers",
