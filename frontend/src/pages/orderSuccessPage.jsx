@@ -5,6 +5,7 @@ import { resetCartAsync } from '../features/cart/cartSlice'
 import { selectLoggedInUser } from '../features/auth/authSlice'
 import { resetOrder } from '../features/orders/orderSlice'
 import { selectUserInfo } from '../features/user/userSlice'
+import { Navigate } from 'react-router-dom'
 
 function OrderSuccessPage() {
     const params = useParams()
@@ -21,6 +22,7 @@ function OrderSuccessPage() {
 
   return (
     <div>
+      {!params.id && <Navigate to='/' replace={true}></Navigate>}
         <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
           <p className="text-base font-semibold text-indigo-600">Order ID : {params?.id}</p>

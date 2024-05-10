@@ -64,7 +64,7 @@ export const CheckoutForm =()=>{
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `https://shopify-backendtwo.vercel.app/order-success/${currentOrder.id}`,
+        return_url: `${window.location.origin/orderSuccess/currentOrder.id}`,
       },
     });
 
