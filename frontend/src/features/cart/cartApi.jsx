@@ -1,6 +1,6 @@
 export const addToCart = (item) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-two-mu.vercel.app/cart",{
+   const response = await fetch("https://shopify-mu-blush.vercel.app/cart",{
     method:"POST",
     body:JSON.stringify(item),
     headers:{"content-type":"application/json"}
@@ -14,7 +14,7 @@ export const addToCart = (item) => {
 export const fetchItemsByUserId = () => {
   return new Promise(async(resolve) =>{
     try {  
-      const response = await fetch("https://shopify-two-mu.vercel.app/cart")
+      const response = await fetch("https://shopify-mu-blush.vercel.app/cart")
       const data = await response.json()
           resolve({data})
       } catch (error) {
@@ -26,7 +26,7 @@ export const fetchItemsByUserId = () => {
 
 export const updateCart = (update) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-two-mu.vercel.app/cart/"+update.id,{
+   const response = await fetch("https://shopify-mu-blush.vercel.app/cart/"+update.id,{
     method:"PATCH",
     body:JSON.stringify(update),
     headers:{"content-type":"application/json"}
@@ -39,7 +39,7 @@ export const updateCart = (update) => {
 
 export const deleteItemFromCart = (itemId) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-two-mu.vercel.app/cart/"+itemId,{
+   const response = await fetch("https://shopify-mu-blush.vercel.app/cart/"+itemId,{
     method:"DELETE",
     headers:{"content-type":"application/json"}
    })
