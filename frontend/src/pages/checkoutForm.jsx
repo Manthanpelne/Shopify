@@ -64,7 +64,6 @@ export const CheckoutForm =()=>{
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
         return_url: `https://shopify-backendtwo.vercel.app/order-success/${currentOrder.id}`,
       },
     });
