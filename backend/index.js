@@ -3,7 +3,7 @@ const app = express();
 const { Connection } = require("./db");
 const cors = require("cors");
 const cookies = require("cookie-parser");
-const session = require("cookie-session")
+const session = require("express-session")
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
@@ -13,6 +13,18 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const jwt = require("jsonwebtoken");
 const path = require("path")
 require("dotenv").config();
+
+
+const MemoryStore = require('memorystore')(session)
+
+app.use(session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    resave: false,
+    secret: 'keyboard cat'
+}))
 
 
 
