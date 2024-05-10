@@ -65,7 +65,7 @@ export const CheckoutForm =()=>{
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://shopify-7jxg7186v-manthan-kailash-pelnes-projects.vercel.app/order-success/${currentOrder.id}`,
+        return_url: `https://shopify-two-mu.vercel.app/order-success/${currentOrder.id}`,
       },
     });
 
