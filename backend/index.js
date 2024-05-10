@@ -27,7 +27,7 @@ app.use(session({
 
 
 
-//jwt options
+//jwt option
 const opts = {};
 opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = process.env.SECRET_KEY;
