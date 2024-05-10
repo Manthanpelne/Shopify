@@ -68,7 +68,7 @@
         },
         {
           "src": "/order-success/(.*)",
-          "dest": "index.js"
+          "dest": "dest/assets/index-BphVyaGI.js"
         },
         {
           "src": "/orders/(.*)",
