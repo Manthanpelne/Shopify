@@ -67,6 +67,10 @@
           "dest": "index.js"
         },
         {
+          "src": "/order-success/(.*)",
+          "dest": "index.js"
+        },
+        {
           "src": "/orders/(.*)",
           "dest": "index.js"
         },
