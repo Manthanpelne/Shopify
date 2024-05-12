@@ -1,6 +1,9 @@
 export const fetchAllProducts = () => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("/product")
+     const response = await fetch("http://localhost:8080/product",{
+      credentials: "include",
+    withCredentials:true
+     })
      const data = await response.json()
      resolve({data})
 }
@@ -10,7 +13,10 @@ export const fetchAllProducts = () => {
 
   export const fetchAllProductsById = (id) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("/product/"+id)
+     const response = await fetch("http://localhost:8080/product/"+id,{
+      credentials: "include",
+    withCredentials:true
+     })
      const data = await response.json()
      resolve({data})
 }
@@ -21,10 +27,12 @@ export const fetchAllProducts = () => {
   
   export const createProduct = (product) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("/product/",{
+     const response = await fetch("http://localhost:8080/product/",{
       method:"POST",
       body:JSON.stringify(product),
-      headers:{"content-type":"application/json"}
+      headers:{"content-type":"application/json"},
+      credentials: "include",
+    withCredentials:true
      })
      const data = await response.json()
      resolve({data})
@@ -36,10 +44,12 @@ export const fetchAllProducts = () => {
 
   export const updateProduct = (update) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("/product/"+update.id,{
+     const response = await fetch("http://localhost:8080/product/"+update.id,{
       method:"PATCH",
       body:JSON.stringify(update),
-      headers:{"content-type":"application/json"}
+      headers:{"content-type":"application/json"},
+      credentials: "include",
+    withCredentials:true
      })
      const data = await response.json()
      resolve({data})
@@ -74,7 +84,10 @@ export const fetchAllProducts = () => {
     }
     //console.log(queryString)
     return new Promise(async(resolve) =>{
-     const response = await fetch("/product?"+queryString)
+     const response = await fetch("http://localhost:8080/product?"+queryString,{
+      credentials: "include",
+    withCredentials:true
+     })
      const data = await response.json()
      //console.log(data)
      const totalItems = response.headers.get('X-Total-Count');
@@ -86,7 +99,10 @@ export const fetchAllProducts = () => {
 //fetch using category
 export const fetchAllCategories = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("/category")
+   const response = await fetch("http://localhost:8080/category",{
+    credentials: "include",
+    withCredentials:true
+   })
    const data = await response.json()
    resolve({data})
 }
@@ -96,7 +112,10 @@ export const fetchAllCategories = () => {
 //fetch using category
 export const fetchAllBrands = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("/brand")
+   const response = await fetch("http://localhost:8080/brand",{
+    credentials: "include",
+    withCredentials:true
+   })
    const data = await response.json()
    resolve({data})
 }

@@ -9,25 +9,25 @@ const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
 const { isAuth, sanitizeUser, cookieExtractor } = require("./services/common");
 const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
+
 const jwt = require("jsonwebtoken");
-const path = require("path")
+const path = require("path");
 require("dotenv").config();
 
-const MemoryStore = require('memorystore')(session)
+const MemoryStore = require("memorystore")(session);
 
-app.use(session({
+app.use(
+  session({
     cookie: { maxAge: 86400000 },
     store: new MemoryStore({
-      checkPeriod: 86400000 // 
+      checkPeriod: 86400000, //
     }),
     resave: false,
-    secret: 'keyboard cat'
-}))
+    secret: "keyboard cat",
+  })
+);
 
-const daaaaa = []
-
-
+const daaaaa = [];
 
 //jwt option
 const opts = {};
@@ -43,75 +43,77 @@ const cartRouter = require("./routes/cart");
 const orderRouter = require("./routes/order");
 const { User } = require("./models/user");
 
-
 app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook') {
+  if (req.originalUrl === "/webhook") {
     next();
   } else {
     express.json()(req, res, next);
   }
 });
 
-
 //webhook
 const endpointSecret = process.env.webhook_signing_secret;
 
-app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
-  const sig = request.headers['stripe-signature'];
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  (request, response) => {
+    const sig = request.headers["stripe-signature"];
 
-  let event;
+    let event;
 
-  try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-  } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
-    return;
+    try {
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case "payment_intent.succeeded":
+        const paymentIntentSucceeded = event.data.object;
+        console.log({ paymentIntentSucceeded });
+        // Then define and call a function to handle the event payment_intent.succeeded
+        break;
+      // ... handle other event types
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    response.send();
   }
-
-  // Handle the event
-  switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntentSucceeded = event.data.object;
-      console.log({paymentIntentSucceeded})
-      // Then define and call a function to handle the event payment_intent.succeeded
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
-
-  response.send();
-});
-
-
-
-
+);
 
 //middlewares
-
 
 app.use(express.json());
 app.use(cookies());
 app.use(express.static(path.resolve(__dirname, 'dist')));
-app.use(express.static("dist"));
+//app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin:"*",
-    credentials:true,
+    origin: "http://localhost:5173",
     preflightContinue: true
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, PATCH, OPTIONS"),
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-  );
+    "Access-Control-Allow-Methods",
+    "DELETE, POST, GET, PATCH, OPTIONS"
+  ),
+  res.header(
+    "Access-Control-Allow-Credentials",
+    "true"
+  ),
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
   next();
 });
-
 
 app.use(
   session({
@@ -122,8 +124,6 @@ app.use(
 );
 //passport local strategy:
 app.use(passport.authenticate("session"));
-
-
 
 //routes
 app.use("/product", isAuth(), productsRouter.router);
@@ -137,8 +137,6 @@ app.use("/orders", isAuth(), orderRouter.router);
 // app.get('*', (req, res) =>
 //   res.sendFile(path.resolve('dist', 'index.html'))
 // );
-
-
 
 passport.use(
   "local",
@@ -207,13 +205,11 @@ passport.deserializeUser(function (user, cb) {
   });
 });
 
-
-
 //payments
 const stripe = require("stripe")(process.env.stripe_secret_key);
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { totalAmount, orderId} = req.body;
+  const { totalAmount, orderId } = req.body;
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
@@ -223,22 +219,18 @@ app.post("/create-payment-intent", async (req, res) => {
     automatic_payment_methods: {
       enabled: true,
     },
-    metadata:{
-      orderId
-    }
+    metadata: {
+      orderId,
+    },
   });
   res.send({
     clientSecret: paymentIntent.client_secret,
   });
 });
 
-
-
-app.get("/",(req,res)=>{
-  res.send("data data")
-})
-
-
+app.get("/", (req, res) => {
+  res.send("data data");
+});
 
 const port = process.env.PORT || 3000;
 
