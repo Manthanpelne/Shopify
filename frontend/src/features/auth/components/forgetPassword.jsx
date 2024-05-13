@@ -3,9 +3,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { resetPasswordRequestAsync, selecMailSent } from "../authSlice";
 //import { checkUserAsync, selectError } from "../authSlice";
 
 export const ForgetPass = () => {
+
+  const mailSent = useSelector(selecMailSent)
   const dispatch = useDispatch();
   //console.log(error)
   const {
@@ -53,6 +56,7 @@ export const ForgetPass = () => {
                 noValidate
                 onSubmit={handleSubmit((data) => {
                   console.log(data);
+                  dispatch(resetPasswordRequestAsync(data.email))
                 })}
                 className="space-y-5"
               >
@@ -68,6 +72,12 @@ export const ForgetPass = () => {
                     })}
                     className="w-full mt-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email.message}</p>
+                  )}
+                   {mailSent && (
+                    <p className="text-green-500">Mail sent! ✅</p>
+                  )}
                 </div>
                 <div className="px-4 py-3">
                   <button className="w-full px-4 py-2 text-white font-medium bg-gray-800 hover:bg-black active:bg-gray-600 rounded-lg duration-150">

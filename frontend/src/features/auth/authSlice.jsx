@@ -1,122 +1,170 @@
-
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { loginUser, createUser, signOut ,checkAuth } from "./authApi"
-import { updateUser } from "../user/userApi"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  loginUser,
+  createUser,
+  signOut,
+  checkAuth,
+  resetPasswordRequest,
+  resetPasswordApi,
+} from "./authApi";
+import { updateUser } from "../user/userApi";
 
 const initialState = {
   loggedInUserToken: null,
   status: "idle",
-  error:null,
-  userChecked:false
-}
+  error: null,
+  userChecked: false,
+  mailSent: false,
+  passwordReset: false
+};
 
-
-export const createUserAsync =  createAsyncThunk(
+export const createUserAsync = createAsyncThunk(
   "user/createUser",
   async (userData) => {
-    const response = await createUser(userData)
+    const response = await createUser(userData);
     // The value we return becomes the `fulfilled` action payload
-    return response.data
-  },
-)
+    return response.data;
+  }
+);
 
-export const loginUserAsync =  createAsyncThunk(
+export const loginUserAsync = createAsyncThunk(
   "user/loginUser",
-  async (loginInfo, {rejectWithValue}) => {
-try {
-  const response = await loginUser(loginInfo)
-  // The value we return becomes the `fulfilled` action payload
-  return response.data
-} catch (error) {
-  console.log(error)
- return rejectWithValue(error)
-}
-}
-)
+  async (loginInfo, { rejectWithValue }) => {
+    try {
+      const response = await loginUser(loginInfo);
+      // The value we return becomes the `fulfilled` action payload
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
 
+export const checkAuthAsync = createAsyncThunk("user/checkAuth", async () => {
+  try {
+    const response = await checkAuth();
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  } catch (error) {
+    //console.log(error)
+    return error;
+  }
+});
 
-export const checkAuthAsync =  createAsyncThunk(
-  "user/checkAuth",
-  async () => {
-try {
-  const response = await checkAuth()
-  // The value we return becomes the `fulfilled` action payload
-  return response.data
-} catch (error) {
-  //console.log(error)
- return (error)
-}
-}
-)
+export const resetPasswordRequestAsync = createAsyncThunk(
+  "user/resetPasswordRequest",
+  async (email) => {
+    try {
+      const response = await resetPasswordRequest(email);
+      // The value we return becomes the `fulfilled` action payload
+      console.log(response)
+      return response.data;
+    } catch (error) {
+      //console.log(error)
+      return error;
+    }
+  }
+);
 
+export const resetPasswordApiAsync = createAsyncThunk(
+  "user/resetPasswordApi",
+  async (data) => {
+    try {
+      const response = await resetPasswordApi(data);
+      // The value we return becomes the `fulfilled` action payload
+      console.log(response)
+      return response.data;
+    } catch (error) {
+      //console.log(error)
+      return error;
+    }
+  }
+);
 
-export const signOutAsync =  createAsyncThunk(
+export const signOutAsync = createAsyncThunk(
   "user/signOut",
   async (loginInfo) => {
-    const response = await signOut(loginInfo)
+    const response = await signOut(loginInfo);
     // The value we return becomes the `fulfilled` action payload
-    return response.data
-  },
-)
+    return response.data;
+  }
+);
 
 export const counterSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    increment : (state) => {
-      state.value += 1
+    increment: (state) => {
+      state.value += 1;
     },
   },
-    extraReducers:(builder)=>{
-      builder
-      .addCase(createUserAsync.pending,(state)=>{
-        state.status = "loading"
+  extraReducers: (builder) => {
+    builder
+      .addCase(createUserAsync.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(createUserAsync.fulfilled, (state,action)=>{
+      .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInUserToken = action.payload
+        state.loggedInUserToken = action.payload;
       })
-      .addCase(loginUserAsync.pending,(state)=>{
-        state.status = "loading"
+      .addCase(loginUserAsync.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(loginUserAsync.fulfilled, (state,action)=>{
+      .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInUserToken = action.payload
+        state.loggedInUserToken = action.payload;
       })
-      .addCase(loginUserAsync.rejected, (state,action)=>{
+      .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = "idle";
-        state.error = action.payload
+        state.error = action.payload;
       })
-      .addCase(signOutAsync.pending,(state)=>{
-        state.status = "loading"
+      .addCase(signOutAsync.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(signOutAsync.fulfilled, (state,action)=>{
+      .addCase(signOutAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInUserToken = null
+        state.loggedInUserToken = null;
       })
-      .addCase(checkAuthAsync.pending,(state)=>{
-        state.status = "loading"
+      .addCase(checkAuthAsync.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(checkAuthAsync.fulfilled, (state,action)=>{
+      .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInUserToken = action.payload
-        state.userChecked = true
+        state.loggedInUserToken = action.payload;
+        state.userChecked = true;
       })
-      .addCase(checkAuthAsync.rejected, (state,action)=>{
+      .addCase(checkAuthAsync.rejected, (state, action) => {
         state.status = "idle";
-        state.userChecked = true
+        state.userChecked = true;
       })
-    }
-  })
+      .addCase(resetPasswordRequestAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(resetPasswordRequestAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.mailSent = true;
+      })
+      .addCase(resetPasswordApiAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(resetPasswordApiAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.passwordReset = true;
+      })
+      .addCase(resetPasswordApiAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.payload;
+      })
+  }
+});
 
-
-export const selectLoggedInUser = (state) => state.auth.loggedInUserToken
+export const selectLoggedInUser = (state) => state.auth.loggedInUserToken;
 export const selectError = (state) => state.auth.error;
 export const selectUserChecked = (state) => state.auth.userChecked;
+export const selecMailSent = (state) => state.auth.mailSent;
+export const selectPasswordReset = (state) => state.auth.passwordReset
 
-export const {increment } = counterSlice.actions
-
+export const { increment } = counterSlice.actions;
 
 export default counterSlice.reducer;
-
-

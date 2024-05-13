@@ -33,6 +33,7 @@ import AdminOrderPage from './pages/adminOrderPage';
 import StripeCheckout from './pages/stripeCheckout';
 import { Home } from './pages/home';
 import { ProductListPage } from './pages/productListPage';
+import { ResetPassword } from './pages/resetPasswordPage';
 
 
 const router = createBrowserRouter([
@@ -117,7 +118,7 @@ const router = createBrowserRouter([
   },
   
   {
-    path:"/admin/productform/edit/:id",
+    path:"/admin/product-form/edit/:id",
     element:<ProtectedAdmin>
       <AdminProductFormPage/>
     </ProtectedAdmin> 
@@ -134,6 +135,12 @@ const router = createBrowserRouter([
     path:"/stripe-checkout/",
     element:<Protected>
       <StripeCheckout/>
+    </Protected> 
+  },
+  {
+    path:"/resetPassword",
+    element:<Protected>
+      <ResetPassword/>
     </Protected> 
   },
  {

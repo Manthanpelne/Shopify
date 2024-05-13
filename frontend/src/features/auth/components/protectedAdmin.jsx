@@ -6,7 +6,7 @@ import { selectUserInfo } from "../../user/userSlice";
 export const ProtectedAdmin=({children})=>{
  const user = useSelector(selectLoggedInUser)
  const userInfo = useSelector(selectUserInfo)
- console.log(userInfo)
+ //console.log(userInfo)
 
  if(!user){
     return <Navigate to="/login" replace={true}></Navigate>
