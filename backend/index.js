@@ -9,25 +9,25 @@ const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
 const { isAuth, sanitizeUser, cookieExtractor } = require("./services/common");
 const JwtStrategy = require("passport-jwt").Strategy;
-
 const jwt = require("jsonwebtoken");
 const path = require("path");
 require("dotenv").config();
+
+
 
 const MemoryStore = require("memorystore")(session);
 
 app.use(
   session({
-    cookie: { maxAge: 86400000 },
+    cookie: { maxAge: 864000000 },
     store: new MemoryStore({
-      checkPeriod: 86400000, //
+      checkPeriod: 864000000, //
     }),
     resave: false,
     secret: "keyboard cat",
   })
 );
 
-const daaaaa = [];
 
 //jwt option
 const opts = {};
@@ -42,6 +42,7 @@ const authRouter = require("./routes/auth");
 const cartRouter = require("./routes/cart");
 const orderRouter = require("./routes/order");
 const { User } = require("./models/user");
+const { Order } = require("./models/order");
 
 app.use((req, res, next) => {
   if (req.originalUrl === "/webhook") {
@@ -57,7 +58,7 @@ const endpointSecret = process.env.webhook_signing_secret;
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
-  (request, response) => {
+  async(request, response) => {
     const sig = request.headers["stripe-signature"];
 
     let event;
@@ -73,7 +74,11 @@ app.post(
     switch (event.type) {
       case "payment_intent.succeeded":
         const paymentIntentSucceeded = event.data.object;
-        console.log({ paymentIntentSucceeded });
+        //console.log({ paymentIntentSucceeded });
+        const order = await Order.findById(paymentIntentSucceeded.metadata.orderId)
+        order.paymentStatus = "recieved";
+        await order.save()
+
         // Then define and call a function to handle the event payment_intent.succeeded
         break;
       // ... handle other event types
@@ -89,8 +94,8 @@ app.post(
 
 app.use(express.json());
 app.use(cookies());
-app.use(express.static(path.resolve(__dirname, 'dist')));
-//app.use(express.static("dist"));
+// app.use(express.static(path.resolve(__dirname, 'dist')));
+// //app.use(express.static("dist"));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
@@ -98,7 +103,16 @@ app.use(
     preflightContinue: true
   })
 );
-app.use((req, res, next) => {
+
+// app.use((req,res,next)=>{
+//   if(req.method==="OPTIONS"||req.method==="POST"||req.method==="PATCH"||req.method==="DELETE"){
+//     res.status(200).send({"msg":"success"})
+//   }
+//   next();
+// })
+
+
+app.use(async(req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   res.header(
     "Access-Control-Allow-Methods",
@@ -110,8 +124,12 @@ app.use((req, res, next) => {
   ),
     res.header(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
+    res.header("Access-Control-Max-Age","864000000")
+    if(req.method==="OPTIONS"){
+     return res.status(200).send({"msg":"success"})
+   }
   next();
 });
 
@@ -133,6 +151,7 @@ app.use("/user", isAuth(), usersRouter.router);
 app.use("/auth", authRouter.router);
 app.use("/cart", isAuth(), cartRouter.router);
 app.use("/orders", isAuth(), orderRouter.router);
+
 
 // app.get('*', (req, res) =>
 //   res.sendFile(path.resolve('dist', 'index.html'))

@@ -8,7 +8,8 @@ const userSchema =  mongoose.Schema({
     addresses: { type: [Schema.Types.Mixed] }, 
     // TODO:  We can make a separate Schema for this
     name: { type: String },
-    salt:Buffer
+    salt:Buffer,
+    resetPasswordToken: {type:String, default:""}
 });
 
 const virtual = userSchema.virtual('id');

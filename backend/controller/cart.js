@@ -1,50 +1,47 @@
-const { Cart } = require("../models/cart")
+const { Cart } = require("../models/cart");
 
-exports.fetchCartByUser = async(req,res)=>{
-    const {id} = req.user
+exports.fetchCartByUser = async (req, res) => {
+  const { id } = req.user;
 
-    try {
-        console.log(id,req.user)
-        const cartItem = await Cart.find({user:id}).populate("product")
-        //console.log(cartItem)
-        res.status(200).send(cartItem)
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
+  try {
+    console.log(id, req.user);
+    const cartItem = await Cart.find({ user: id }).populate("product");
+    //console.log(cartItem)
+    res.status(200).send(cartItem);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 
+exports.addToCart = async (req, res) => {
+  const { id } = req.user;
+  const cart = new Cart({ ...req.body, user: id });
+  const response = await cart.save();
+  const result = await response.populate("product");
+  try {
+    return res.status(200).send(result);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};
 
-exports.addToCart = async(req,res) =>{
-    const {id} = req.user;
-    const cart = new Cart({...req.body, user:id})
-     const response = await cart.save()
-     const result = await response.populate("product")
-    try {
-        res.status(200).send(result)
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
+exports.deleteFromCart = async (req, res) => {
+  const { id } = req.params;
+  const result = await Cart.findByIdAndDelete(id);
+  try {
+    return res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 
-
-exports.deleteFromCart = async(req,res) =>{
-    const {id} = req.params
-     const result = await Cart.findByIdAndDelete(id)
-    try {
-        res.status(200).send(result)
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
-
-
-exports.updateCart = async(req,res)=>{
-    const {id} = req.params
-    const cart = await Cart.findByIdAndUpdate(id, req.body, {new:true})
-    const response = await cart.populate("product")
-    try {
-        res.status(200).send(response)
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
+exports.updateCart = async (req, res) => {
+  const { id } = req.params;
+  const cart = await Cart.findByIdAndUpdate(id, req.body, { new: true });
+  const response = await cart.populate("product");
+  try {
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
