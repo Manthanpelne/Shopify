@@ -1,4 +1,6 @@
 const { Order } = require("../models/order");
+const { User } = require("../models/user");
+const { sendMail, invoiceTemplate } = require("../services/common");
 
 exports.fetchOrderByUser = async (req, res) => {
   const { id } = req.user;
@@ -11,9 +13,11 @@ exports.fetchOrderByUser = async (req, res) => {
 };
 
 exports.createOrder = async (req, res) => {
+  try { 
   const order = new Order(req.body);
   const response = await order.save();
-  try {
+  const user = await User.findById(order.user)
+  sendMail({to:user.email, html:invoiceTemplate(order), subject:"Order Recieved By Shopify🎉"})
     return res.status(200).send(response);
   } catch (error) {
     res.status(400).send(error);

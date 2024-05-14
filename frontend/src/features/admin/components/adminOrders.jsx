@@ -104,7 +104,7 @@ export const AdminOrders = () => {
                         <ArrowDownIcon className="w-4 h-4 inline cursor-pointer"></ArrowDownIcon>
                       )}
                     </th>
-                    <th className="py-3 px-6 text-left">Items</th>
+                    <th className="py-3 px-6 text-left">Items & QTY</th>
                     <th
                       className="py-3 px-6 text-center"
                       onClick={(e) =>
@@ -125,6 +125,7 @@ export const AdminOrders = () => {
                     <th className="py-3 px-6 text-center">Order Status</th>
                     <th className="py-3 px-6 text-center">Payment Mode</th>
                     <th className="py-3 px-6 text-center">Payment Status</th>
+                    <th className="py-3 px-6 text-center">Order Time</th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">
@@ -146,7 +147,7 @@ export const AdminOrders = () => {
                               />
                             </div>
                             <span>
-                              {item.title} - qty:{item.quantity} - ${discountedPrice(item.product)}
+                              {item.product.title} - {item.quantity} 
                             </span>
                           </div>
                         ))}
@@ -215,6 +216,11 @@ export const AdminOrders = () => {
                             {order.paymentStatus}
                           </span>
                         )}
+                      </td>
+                      <td className="py-3 px-6 text-center">
+                        <div className="flex items-center justify-center">
+                          {order.createdAt? new Date(order.createdAt).toLocaleString():null}
+                        </div>
                       </td>
                       <td className="py-3 px-6 text-center">
                         <div className="flex item-center justify-center">

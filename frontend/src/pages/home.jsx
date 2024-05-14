@@ -43,12 +43,12 @@ export const Home = () =>{
     return (
         <div>
             <NavBar/>
-            <div className="max-w-[1500px] h-[580px] px-5 py-0 relative group">
+            <div className="max-w-[1500px] h-[580px] px-5 py-0  group">
                 <div style={{backgroundImage: `url(${slides[curruntIndex].url})`}} className="max-w-[1500px] h-[580px] bg-center bg-cover duration-500"></div>
-                <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+                <div className="hidden group-hover:block absolute top-[65%] -translate-x-0 translate-y-[50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
                   <BsChevronCompactLeft onClick={prevSlide} size={30}/>
                 </div>
-                <div className="hidden group-hover:block  absolute top-[50%] -translate-x-0 translate-y-[50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+                <div className="hidden group-hover:block  absolute top-[65%] -translate-x-0 translate-y-[50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
                 <BsChevronCompactRight onClick={nextSlide} size={30}/>
                 </div>
                 <div className="flex top-4 justify-center py-2">
