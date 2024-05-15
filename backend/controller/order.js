@@ -1,4 +1,5 @@
 const { Order } = require("../models/order");
+const { Product } = require("../models/product");
 const { User } = require("../models/user");
 const { sendMail, invoiceTemplate } = require("../services/common");
 
@@ -15,6 +16,13 @@ exports.fetchOrderByUser = async (req, res) => {
 exports.createOrder = async (req, res) => {
   try { 
   const order = new Order(req.body);
+
+  for (let item of order.items){
+    let product = await Product.findOne({_id:item.product.id})
+    product.$inc("stock",-1*item.quantity)
+    await product.save()
+  }
+
   const response = await order.save();
   const user = await User.findById(order.user)
   sendMail({to:user.email, html:invoiceTemplate(order), subject:"Order Recieved By Shopify🎉"})
@@ -23,6 +31,8 @@ exports.createOrder = async (req, res) => {
     res.status(400).send(error);
   }
 };
+
+
 
 exports.deleteOrder = async (req, res) => {
   const { id } = req.params;

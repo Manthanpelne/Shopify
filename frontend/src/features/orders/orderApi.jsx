@@ -1,3 +1,5 @@
+import toast from "react-hot-toast"
+
 export const createOrder = (order) => {
   return new Promise(async(resolve) =>{
    const response = await fetch("http://localhost:8080/orders",{
@@ -46,8 +48,13 @@ export const updateOrder = (order) => {
     credentials: "include",
     withCredentials:true
    })
-   const data = await response.json()
-   resolve({data})
+   if(response.ok){
+     const data = await response.json()
+     resolve({data})
+     toast.success("Order updated successfully")
+   }else{
+    toast.error("Something went wrong")
+   }
 }
   )
 }

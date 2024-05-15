@@ -8,6 +8,7 @@ import { addToCartAsync, selectItems } from '../../cart/cartSlice'
 import {selectLoggedInUser} from "../../auth/authSlice"
 import { discountedPrice } from '../../../app/constants'
 import { selectUserInfo } from '../../user/userSlice'
+import toast from 'react-hot-toast'
 
 // const pro = {
 //   name: 'Basic Tee 6-Pack',
@@ -111,7 +112,7 @@ export const ProductDetails=()=> {
     //alert.success("Item successfully added to Cart")
    }
   else{
-   alert("already added to cart")
+   toast.error("already added to cart")
   }
   }
 
@@ -124,7 +125,6 @@ export const ProductDetails=()=> {
 
   return (
     <div className="bg-white">
-      {/* {!user && <Navigate to="/login" replace={true}></Navigate> } */}
     <div className="pt-6">
       <nav aria-label="Breadcrumb">
         <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">

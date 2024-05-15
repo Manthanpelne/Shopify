@@ -150,6 +150,7 @@ export const productSlice = createSlice({
   export const selectAllCategory = (state) => state.product.category
   export const selectAllBrands = (state) => state.product.brand
   export const selectProductById = (state) => state.product.selectedProduct
+  export const selectProductStatus = (state) => state.product.status
 
 export const {clearSelectedProduct } = productSlice.actions
 

@@ -93,7 +93,7 @@ const handleOrder = (e)=>{
   return (
     <>
       {!items.length && <Navigate to="/products" replace={true}></Navigate> }
-      {currentOrder && currentOrder.paymentMethod ==="cash" && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate> }
+      {currentOrder && currentOrder.paymentMethod ==="cash" && <Navigate to={`/OrderSuccess/${currentOrder.id}`} replace={true}></Navigate> }
       {currentOrder && currentOrder.paymentMethod ==="card" && <Navigate to={`/stripe-checkout/`} replace={true}></Navigate> }
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-5">

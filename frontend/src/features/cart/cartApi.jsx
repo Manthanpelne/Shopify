@@ -1,16 +1,29 @@
+import toast from "react-hot-toast"
+
 export const addToCart = (item) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("http://localhost:8080/cart",{
-    method:"POST",
-    body:JSON.stringify(item),
-    headers:{"content-type":"application/json"},
-    credentials: "include",
-    withCredentials:true
-   })
-   const data = await response.json()
-   resolve({data})
-}
-  )
+    try {
+      const response = await fetch("http://localhost:8080/cart",{
+       method:"POST",
+       body:JSON.stringify(item),
+       headers:{"content-type":"application/json"},
+       credentials: "include",
+       withCredentials:true
+      })
+      if(response.ok){
+        const data = await response.json()
+        resolve({data})
+        toast.success("Item successfully added to cart")
+      }else{
+        const error = await response.text()
+        console.log(error)
+       toast.error("Something went wrong")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong")
+    }
+  })
 }
 
 export const fetchItemsByUserId = () => {
@@ -40,6 +53,7 @@ export const updateCart = (update) => {
    })
    const data = await response.json()
    resolve({data})
+   toast.success("Cart updated successfully")
 }
   )
 }
@@ -52,8 +66,13 @@ export const deleteItemFromCart = (itemId) => {
     credentials: "include",
     withCredentials:true
    })
-   const data = await response.json()
-   resolve({data:{id:itemId}})
+   if(response.ok){
+     const data = await response.json()
+     resolve({data:{id:itemId}})
+     toast.success("Item removed successfully")
+   }else{
+    toast.error("Something went wrong")
+   }
 }
   )
 }

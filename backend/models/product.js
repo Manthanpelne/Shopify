@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 
+
 const productSchema = mongoose.Schema({
     title: { type : String, required: true, unique: true},
     description: { type : String, required: true},
@@ -19,6 +20,7 @@ const virtual = productSchema.virtual("id")
 virtual.get(()=>{
     return this._id
 })
+
 
 productSchema.set("toJSON",{
     virtuals:true,

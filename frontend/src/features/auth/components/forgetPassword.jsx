@@ -75,9 +75,6 @@ export const ForgetPass = () => {
                   {errors.email && (
                     <p className="text-red-500">{errors.email.message}</p>
                   )}
-                   {mailSent && (
-                    <p className="text-green-500">Mail sent! ✅</p>
-                  )}
                 </div>
                 <div className="px-4 py-3">
                   <button className="w-full px-4 py-2 text-white font-medium bg-gray-800 hover:bg-black active:bg-gray-600 rounded-lg duration-150">

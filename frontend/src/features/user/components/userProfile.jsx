@@ -7,6 +7,7 @@ import {
   updateUserAsync,
 } from "../userSlice";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export const UserProfile = () => {
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
@@ -23,12 +24,13 @@ export const UserProfile = () => {
 
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserInfo);
-  console.log(userInfo)
+  //console.log(userInfo)
 
   const handleRemove = (e, index) => {
     const newUser = { ...userInfo, addresses: [...userInfo.addresses] };
     newUser.addresses.splice(index, 1);
     dispatch(updateUserAsync(newUser));
+    toast.success("Address removed successfully")
   };
 
   const handleEdit = (addressUpdate, index) => {
@@ -36,11 +38,12 @@ export const UserProfile = () => {
     newUser.addresses.splice(index, 1, addressUpdate);
     dispatch(updateUserAsync(newUser));
     setSelectedEditIndex(-1);
+    toast.success("Address edited successfully")
   };
 
   const handleEditForm = (index) => {
     setSelectedEditIndex(index);
-    const address = user.addresses[index];
+    const address = userInfo.addresses[index];
     setValue("name", address.name);
     setValue("email", address.email);
     setValue("city", address.city);
@@ -54,6 +57,7 @@ export const UserProfile = () => {
     const newUser = { ...userInfo, addresses: [...userInfo.addresses, address] };
     dispatch(updateUserAsync(newUser));
     setShowAddAddressForm(false);
+    toast.success("New address added successfully")
   };
 
   return (
@@ -66,7 +70,7 @@ export const UserProfile = () => {
                 NAME
               </label>
               <h1 className="text-sm my-0 font-semibold tracking-tight text-gray-600">
-                {userInfo.name}
+                {userInfo.name}   {userInfo.role==="admin" && <h3>role : {userInfo.role}</h3> }
               </h1>
             </div>
             <div className="mt-6 px-4">
@@ -77,7 +81,6 @@ export const UserProfile = () => {
                 {userInfo.email}
               </h1>
             </div>
-            {userInfo.role==="admin" && <h3>role : {userInfo.role}</h3> }
           </div>
           <div>
             <img

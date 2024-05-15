@@ -4,9 +4,8 @@ import { NavBar } from "../features/navbar/header"
 export const ProductDetailPage=()=>{
    return (
     <div>
-        <NavBar>
+        <NavBar/>
         <AdminProductDetails/>
-        </NavBar>
     </div>
    )
 }

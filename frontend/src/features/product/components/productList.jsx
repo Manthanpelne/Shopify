@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   fetchAllBrandsAsync,
   fetchAllCategoriesAsync,
@@ -8,6 +9,7 @@ import {
   selectAllCategory,
   selectAllProducts,
   selectTotalItems,
+  selectProductStatus,
 } from "../productListSlice";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
 import { Fragment, useEffect, useState } from "react";
@@ -27,9 +29,9 @@ import { Pagination } from "../../common/pagination";
 import { discountedPrice } from "../../../app/constants";
 
 const sortOptions = [
-  { name: "Best Rating", sort: "rating",order:"desc", current: false },
-  { name: "Price: Low to High", sort: "price",order:"asc", current: false },
-  { name: "Price: High to Low", sort: "price",order:"desc", current: false },
+  { name: "Best Rating", sort: "rating", order: "desc", current: false },
+  { name: "Price: Low to High", sort: "price", order: "asc", current: false },
+  { name: "Price: High to Low", sort: "price", order: "desc", current: false },
 ];
 const subCategories = [
   { name: "Totes", href: "#" },
@@ -39,7 +41,6 @@ const subCategories = [
   { name: "Laptop Sleeves", href: "#" },
 ];
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -47,16 +48,16 @@ function classNames(...classes) {
 export const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
-  const totalItems = useSelector(selectTotalItems)
-  const brand = useSelector(selectAllBrands)
-  const category = useSelector(selectAllCategory)
+  const status = useSelector(selectProductStatus);
+  const totalItems = useSelector(selectTotalItems);
+  const brand = useSelector(selectAllBrands);
+  const category = useSelector(selectAllCategory);
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
   //const user = useSelector(selectLoggedInUser)
-
 
   const filters = [
     {
@@ -74,15 +75,14 @@ export const ProductList = () => {
     {
       id: "category",
       name: "Category",
-      options: category
+      options: category,
     },
     {
       id: "brand",
       name: "Brands",
-      options:brand
+      options: brand,
     },
   ];
-  
 
   //filters----->
   const handleFilter = (e, section, option) => {
@@ -102,37 +102,29 @@ export const ProductList = () => {
     setFilter(newFilter);
   };
 
-
-
   const handleSort = (e, option) => {
-    const newSort = { _sort: option.sort, _order:option.order };
+    const newSort = { _sort: option.sort, _order: option.order };
     setSort(newSort);
   };
 
-
-
   const handlePage = (page) => {
-   // console.log({page})
+    // console.log({page})
     setPage(page);
   };
 
+  useEffect(() => {
+    const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
+    dispatch(fetchAllProductsByFiltersAsync({ filter, sort, pagination }));
+  }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
-    const pagination = {_page:page,_limit:ITEMS_PER_PAGE};
-    dispatch(fetchAllProductsByFiltersAsync({ filter, sort, pagination }));
-  }, [dispatch, filter,sort,page]);
+    setPage(1);
+  }, [totalItems, sort]);
 
-
-  useEffect(()=>{
-   setPage(1)
-  },[totalItems,sort])
-
-
-
-  useEffect(()=>{
- dispatch(fetchAllBrandsAsync())
- dispatch(fetchAllCategoriesAsync())
-  },[])
+  useEffect(() => {
+    dispatch(fetchAllBrandsAsync());
+    dispatch(fetchAllCategoriesAsync());
+  }, []);
 
   return (
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -149,7 +141,7 @@ export const ProductList = () => {
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-14">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 arr">
-                New Arrivals 
+                New Arrivals
               </h1>
 
               <div className="flex items-center">
@@ -226,12 +218,17 @@ export const ProductList = () => {
                 <DesktopFilter handleFilter={handleFilter} filters={filters} />
 
                 {/* Product grid */}
-                <ProductGrid products={products} />
+                <ProductGrid products={products} status={status} />
               </div>
             </section>
 
             {/* pagination */}
-            <Pagination page={page} setPage={setPage} handlePage={handlePage} totalItems={totalItems}/>
+            <Pagination
+              page={page}
+              setPage={setPage}
+              handlePage={handlePage}
+              totalItems={totalItems}
+            />
           </main>
         </div>
       </div>
@@ -243,7 +240,7 @@ const MobileFilter = ({
   mobileFiltersOpen,
   setMobileFiltersOpen,
   handleFilter,
-  filters
+  filters,
 }) => {
   return (
     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -360,7 +357,7 @@ const MobileFilter = ({
   );
 };
 
-const DesktopFilter = ({ handleFilter, filters}) => {
+const DesktopFilter = ({ handleFilter, filters }) => {
   return (
     <form className="hidden lg:block">
       <h3 className="sr-only">Categories</h3>
@@ -418,9 +415,7 @@ const DesktopFilter = ({ handleFilter, filters}) => {
   );
 };
 
-
-
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products, status }) => {
   return (
     <div className="lg:col-span-3">
       {/* <Link to="/cart"><button className="bg-slate-400">cart</button></Link>
@@ -429,9 +424,22 @@ const ProductGrid = ({ products }) => {
       <Link to="/admin"><button className="bg-slate-400">admin</button></Link> */}
       {/* Your content */}
       <div className="bg-white">
-      {/* <Link to="/logout"><button className="bg-slate-400">logout</button></Link> */}
+        {/* <Link to="/logout"><button className="bg-slate-400">logout</button></Link> */}
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+            {status === "pending" ? (
+              <RotatingLines
+                visible={true}
+                height="96"
+                width="96"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : null}
             {products.map((product) => (
               <Link to={`/product-detail/${product.id}`} key={product.id}>
                 <div
@@ -463,18 +471,16 @@ const ProductGrid = ({ products }) => {
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm block font-medium text-gray-900">
-                        $
-                        {Math.round(
-                          product.price * (1 - product.discountPercentage / 100)
-                        )}
-                      </p>
-                      <p className="text-sm block line-through font-medium text-gray-500">
+                      <p className="text-sm block font-medium text-gray-800">
                         ${product.price}
                       </p>
                     </div>
                   </div>
-                  { product.stock<=0 && <p className="text-red-600 font-semibold pt-1 text-center">Out of stock</p>}
+                  {product.stock <= 0 && (
+                    <p className="text-red-600 font-semibold pt-1 text-center">
+                      Out of stock
+                    </p>
+                  )}
                 </div>
               </Link>
             ))}

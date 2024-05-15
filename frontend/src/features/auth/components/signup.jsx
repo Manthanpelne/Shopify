@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { selectLoggedInUser, createUserAsync } from "../authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,7 @@ function SignUp() {
   
   return (
       <div>
-        
+         {!user && <Navigate to="/login" replace={true}></Navigate> }
       <main className="w-full flex">
         <div className="relative flex-1 hidden items-center justify-center h-screen lg:flex">
           <img

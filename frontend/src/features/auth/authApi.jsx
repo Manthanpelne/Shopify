@@ -1,3 +1,6 @@
+import toast, { Toaster } from 'react-hot-toast';
+
+
 export const createUser = (userData) => {
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/auth/signup", {
@@ -5,8 +8,15 @@ export const createUser = (userData) => {
       body: JSON.stringify(userData),
       headers: { "content-type": "application/json" },
     });
-    const data = await response.json();
-    resolve({ data });
+    if(response.ok){
+      const data = await response.json();
+      resolve({ data });
+      toast.success("Signup successfull")
+    }else{
+      const error = await response.text();
+      reject({ error });
+      toast.error("something went wrong. Try again")
+    }
   });
 };
 
@@ -23,12 +33,17 @@ export const loginUser = (loginInfo) => {
       if (response.ok) {
         const data = await response.json();
         resolve({ data });
+        toast.success("Login successfull")
+        return 
       } else {
         const error = await response.text();
         reject({ error });
+        toast.error("Login failed. Check credentials!")
+
       }
     } catch (error) {
       reject({ error });
+      toast.error("something went wrong")
     }
   });
 };
@@ -62,12 +77,15 @@ export const signOut = () => {
       });
       if (response.ok) {
         resolve({ data:"successfully logged out" });
+        toast.success("Logged out successfully")
       } else {
         const error = await response.text();
         reject({ error });
+        toast.error("something went wrong")
       }
     } catch (error) {
       reject({ error });
+      toast.error("something went wrong")
     }
   });
 };
@@ -88,12 +106,15 @@ export const resetPasswordRequest = (email) => {
       if (response.ok) {
         const data = await response.json();
         resolve({ data });
+        toast.success("Email sent successfully")
       } else {
         const error = await response.text();
         reject({ error });
+        toast.error("something went wrong")
       }
     } catch (error) {
       reject({ error });
+      toast.error("something went wrong")
     }
   });
 };
@@ -115,12 +136,15 @@ export const resetPasswordApi = (data) => {
       if (response.ok) {
         const data = await response.json();
         resolve({ data });
+        toast.success("New password saved successfully")
       } else {
         const error = await response.text();
         reject({ error });
+        toast.error("something went wrong")
       }
     } catch (error) {
       reject({ error });
+      toast.error("something went wrong")
     }
   });
 };

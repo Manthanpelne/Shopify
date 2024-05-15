@@ -38,11 +38,11 @@ export const NavLinks = () => {
                       {Link.sublinks.map((mysublink) => (
                         <div>
                           <h1
-                            className="font-semibold text-gray-800 text-sm cursor-pointer">
+                            className="font-semibold text-gray-800 px-2 text-sm cursor-pointer">
                             {mysublink.Head}
                           </h1>
                           {mysublink.sublink.map((slink) => (
-                            <li className="sm:text-sm text-gray-600 my-2.5 cursor-pointer">
+                            <li className="sm:text-sm text-gray-600 px-2  my-2.5 cursor-pointer">
                               {slink.name}
                             </li>
                           ))}

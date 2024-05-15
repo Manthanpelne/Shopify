@@ -9,6 +9,7 @@ exports.fetchUserById = async (req, res) => {
       .send({
         id: user.id,
         email: user.email,
+        name:user.name,
         addresses: user.addresses,
         role: user.role,
       });

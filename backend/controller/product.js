@@ -2,9 +2,9 @@ const { query } = require("express")
 const {Product} = require("../models/product")
 
 exports.createProduct = async(req,res) =>{
+    try {
     const product = new Product(req.body)
      const response = await product.save()
-    try {
         res.status(200).send(response)
     } catch (error) {
         res.status(400).send("somthing went wrong")
@@ -21,15 +21,15 @@ exports.fetchAllProducts = async(req,res) =>{
     let totalProductsQuery = Product.find(condition)
 
     if(req.query.category){
-        query = query.find({category:req.query.category})
+        query = query.find({category:{$in:req.query.category.split(",")}})
         totalProductsQuery = totalProductsQuery.find({
-            category: req.query.category
+            category: {$in:req.query.category.split(",")}
         })
     }
     if(req.query.brand){
-        query = query.find({brand:req.query.brand})
+        query = query.find({brand:{$in:req.query.brand.split(",")}})
         totalProductsQuery = totalProductsQuery.find({
-            brand: req.query.brand
+            brand: {$in:req.query.brand.split(",")}
         })
     }
     if(req.query._sort && req.query._order){
@@ -72,9 +72,9 @@ exports.fetchProductById = async(req,res)=>{
 
 //updateProduct
 exports.updateProduct = async(req,res)=>{
+    try {
     const {id} = req.params
     const product = await Product.findByIdAndUpdate(id, req.body, {new:true})
-    try {
         res.status(200).send(product)
     } catch (error) {
         res.status(400).send(error)

@@ -138,7 +138,7 @@ exports.resetPassword = async (req, res) => {
       const response = await sendMail({to:email, subject, html})
       res.status(200).send(response)
     }else{
-      res.sendStatus(400)
+      res.sendStatus(400).send({"msg":"Invalid email"})
     }
       })
     }else{
