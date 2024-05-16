@@ -2,11 +2,15 @@ import { NavBar } from "../features/navbar/header";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useState } from "react";
 import { RxDotFilled } from "react-icons/rx";
+import { selectLoggedInUser } from "../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 export const Home = () => {
+  // const user = useSelector(selectLoggedInUser)
+  // console.log(user.error)
   const slides = [
     {
-      url: "https://assets.ajio.com/cms/AJIO/WEB/D-1.0-UHP-05052024-MainBannerDailyChanging-Z1-P4-Puma-Reebok-min50-extra750.jpg",
+      url: "https://mir-s3-cdn-cf.behance.net/project_modules/1400/00c88d153666003.6333ef06a92df.png",
     },
     {
       url: "https://m.media-amazon.com/images/I/61CiqVTRBEL._SX3000_.jpg",
@@ -44,7 +48,7 @@ export const Home = () => {
 
     <div>
       <NavBar />
-
+     <div>
       <div class="relative overflow-hidden bg-white">
   <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
     <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
@@ -68,10 +72,10 @@ export const Home = () => {
                 </div>
                 <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://i.pinimg.com/236x/88/b7/6c/88b76cf2655bd81ab36d67e92f6468ac.jpg" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
                     <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg" alt="" class="h-full w-full object-cover object-center"/>
@@ -79,22 +83,23 @@ export const Home = () => {
                 </div>
                 <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://i.pinimg.com/236x/60/1e/9e/601e9e724ee02f41a7ff76ab34ede5d6.jpg" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                   <div class="h-64 w-44 overflow-hidden rounded-lg">
-                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg" alt="" class="h-full w-full object-cover object-center"/>
+                    <img src="https://i.pinimg.com/236x/37/7a/7e/377a7eb5fc291e2795cc5a0bdce8205e.jpg" alt="" class="h-full w-full object-cover object-center"/>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <a href="#" class="inline-block rounded-md border border-transparent bg-zinc-800 px-8 py-3 text-center font-medium text-white hover:bg-gray-700">Shop Collection</a>
+          <a href="/products" class="inline-block rounded-md border border-transparent bg-zinc-800 px-8 py-3 text-center font-medium text-white hover:bg-gray-700">Shop Collection</a>
         </div>
       </div>
     </div>
   </div>
 </div>
+     </div>
 
 
 <div className="lg:flex justify-between max-w-[1440px] m-auto h-auto md:mt-20 bg-neutral-200">
@@ -182,15 +187,15 @@ export const Home = () => {
       </div>
 
 
-      <div className="max-w-[1500px] h-[580px] px-5 py-7 md:mt-20 group">
+      <div className="max-w-[1300px] h-[680px] px-5 m-auto py-7 md:mt-20 group">
         <div
           style={{ backgroundImage: `url(${slides[curruntIndex].url})` }}
-          className="lg:w-[1440px] h-[580px] bg-center bg-cover duration-500"
+          className="lg:w-[1040px] m-auto h-full bg-center bg-cover duration-500"
         ></div>
-        <div className="hidden group-hover:block absolute top-[240%] -translate-x-0 translate-y-[50%] left-18 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+        <div className="hidden group-hover:block absolute top-[240%] -translate-x-[-110%] translate-y-[80%] left-18 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
           <BsChevronCompactLeft onClick={prevSlide} size={30} />
         </div>
-        <div className="hidden group-hover:block  absolute top-[240%] -translate-x-[-3040%] translate-y-0 right-18 text-2xl rounded-full p-2 bg-black/15 text-white cursor-pointer">
+        <div className="hidden group-hover:block  absolute top-[245%] -translate-x-[-2520%] translate-y-0 right-18 text-2xl rounded-full p-2 bg-black/15 text-white cursor-pointer">
           <BsChevronCompactRight onClick={nextSlide} size={30} />
         </div>
         <div className="flex top-4 justify-center py-2">
@@ -208,15 +213,15 @@ export const Home = () => {
     </div>
  
  {/* mid section */}
-    <div class="bg-gray-100">
+    <div class="bg-white mt-12">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
+    <div class="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-20">
       <h2 class="text-2xl font-bold text-gray-900">Collections</h2>
 
       <div class="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
         <div class="group relative">
           <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
-            <img src="https://i.pinimg.com/originals/99/18/e8/9918e8961e9c9f1e019c609c8b176a68.jpg"/>
+            <img src="https://i.pinimg.com/564x/57/94/7a/57947a0918bdcded4d1d8daebd17b804.jpg"/>
           </div>
           <h3 class="mt-6 text-sm text-gray-500">
             <a href="#">
@@ -228,19 +233,19 @@ export const Home = () => {
         </div>
         <div class="group relative">
           <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
-            <img src="https://i.pinimg.com/736x/0f/53/84/0f5384a81997166e7a5fed0c4975f8b6.jpg"/>
+            <img src="https://i.pinimg.com/564x/6d/6a/34/6d6a34bac61fec596416d9ce7136426b.jpg"/>
           </div>
           <h3 class="mt-6 text-sm text-gray-500">
             <a href="#">
               <span class="absolute inset-0"></span>
-              Aesthetic kitchen
+              Aesthetic Home
             </a>
           </h3>
-          <p class="text-base font-semibold text-gray-900">Kitchen sets</p>
+          <p class="text-base font-semibold text-gray-900">Home Decor</p>
         </div>
         <div class="group relative">
           <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
-            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="h-full w-full object-cover object-center"/>
+            <img src="https://i.pinimg.com/474x/e1/4a/c8/e14ac8d60549a97838f9d1c6eed8676a.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="h-full w-full object-cover object-center"/>
           </div>
           <h3 class="mt-6 text-sm text-gray-500">
             <a href="#">

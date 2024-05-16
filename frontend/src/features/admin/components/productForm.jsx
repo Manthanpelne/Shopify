@@ -66,6 +66,11 @@ export const ProductForm=()=>{
 
     return (
       <>
+       {selectedProduct && selectedProduct[0].deleted && (
+                <h2 className="text-red-500 py-2 sm:col-span-6">
+                  ⚠️ DELETED PRODUCT
+                </h2>
+              )}
         <form
            noValidate
         onSubmit={handleSubmit((data) => {
@@ -109,7 +114,9 @@ export const ProductForm=()=>{
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
-                        {...register("title")}
+                        {...register("title",{
+                          required:"Please enter title"
+                        })}
                       
                         id="title"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -126,7 +133,9 @@ export const ProductForm=()=>{
                   <div className="mt-2">
                     <textarea
                       id="description"
-                      {...register("description")}
+                      {...register("description",{
+                          required: "Please enter description"
+                      })}
                       rows={3}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       defaultValue={''}
@@ -195,7 +204,9 @@ export const ProductForm=()=>{
                         type="number"
                         {...register("price",{
                             min:1,
-                            max:100000
+                            max:100000,
+                            required:"Price is required"
+                            
                         })}
                         id="price"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -214,7 +225,8 @@ export const ProductForm=()=>{
                       <input
                         type="number"
                         {...register("discountPercentage",{
-                            min:0
+                            min:0,
+                            required:"DiscountPercentage is required"
                         })}
                         id="number"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -234,7 +246,8 @@ export const ProductForm=()=>{
                       <input
                         type="number"
                         {...register("stock",{
-                            min:0
+                            min:0,
+                            required:"Stocks are required"
                         })}
                         id="stock"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -253,7 +266,9 @@ export const ProductForm=()=>{
 
                       <input
                         type="text"
-                        {...register("thumbnail")}
+                        {...register("thumbnail",{
+                          required:"Thumbnail is required"
+                        })}
                         id="thumbnail"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="Enter thumbnail link"
@@ -272,7 +287,9 @@ export const ProductForm=()=>{
 
                       <input
                         type="text"
-                        {...register("image1")}
+                        {...register("image1",{
+                          required:"Image1 is required"
+                        })}
                         id="image1"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="Enter Image 1 link"
@@ -290,7 +307,9 @@ export const ProductForm=()=>{
 
                       <input
                         type="text"
-                        {...register("image2")}
+                        {...register("image2",{
+                          required:"Image is required"
+                        })}
                         id="image2"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="Enter image 2 link"
@@ -307,7 +326,9 @@ export const ProductForm=()=>{
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
-                        {...register("image3")}
+                        {...register("image3",{
+                          required:"Image is required"
+                        })}
                         id="image3"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="Enter image 3 link"
@@ -324,7 +345,9 @@ export const ProductForm=()=>{
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
-                        {...register("image4")}
+                        {...register("image4",{
+                          required:"Image is required"
+                        })}
                         id="image4"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="Enter image 4 link"

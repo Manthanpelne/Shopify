@@ -5,12 +5,16 @@ import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginUserAsync, selectError } from "../authSlice";
 import { selectLoggedInUser } from "../authSlice";
+import { selectUserInfo } from "../../user/userSlice";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError)
-  const user = useSelector(selectLoggedInUser)
+  const user = useSelector(selectUserInfo)
+  const user2 = useSelector(selectLoggedInUser)
+  
   //console.log(user)
+  //console.log(user2)
   //console.log(error)
   const {
     register,
@@ -21,7 +25,7 @@ export const Login = () => {
 
   return (
     <>
-    {user && <Navigate to="/" replace={true}></Navigate> }
+    {user2?.token && <Navigate to="/" replace={true}></Navigate> }
     <div>
       <main className="w-full flex">
         <div className="relative flex-1 hidden items-center justify-center h-screen lg:flex">
@@ -166,6 +170,7 @@ export const Login = () => {
               noValidate
                 onSubmit={handleSubmit((data) => {
                   dispatch(loginUserAsync({email:data.email, password:data.password }))
+                  
                 })}
               className="space-y-5"
             >

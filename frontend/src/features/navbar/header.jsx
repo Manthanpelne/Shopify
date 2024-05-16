@@ -17,7 +17,7 @@ import { selectUserInfo } from '../user/userSlice';
 
 const navigation = [
   { name: 'Products', link: '/products', user: true },
-  { name: 'Products', link: '/admin-productsPage', admin: true },
+  { name: 'Manage Products', link: '/admin-productsPage', admin: true },
   { name: 'Orders', link: '/admin/orders', admin: true },
 
 ];
@@ -39,7 +39,7 @@ export const NavBar = ({children}) => {
     //console.log(userInfo)
   
   return (
-    <div className="">
+    <div className="relative z-10">
       <div>
         <div className="flex bg-zinc-400 justify-between">
           <div>
@@ -55,7 +55,7 @@ export const NavBar = ({children}) => {
           </div>
           <p className="md:hidden mt-3 px-11">Sign In</p>
         </div>
-        <div className="flex justify-around h-20 bg-gray-700">
+        <div className="flex justify-around h-20 bg-gray-600">
           <div className="z-50 md:w-auto w-full flex justify-between">
              <div className="p-3 cursor-pointer text-gray-200 hover:bg-slate-700 rounded-lg md:hidden text-3xl" onClick={()=>setOpen(!open)}>
           <ion-icon name={`${open?"close":"menu"}`}></ion-icon>
@@ -77,7 +77,7 @@ export const NavBar = ({children}) => {
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-4">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                    
@@ -105,7 +105,7 @@ export const NavBar = ({children}) => {
                   </div>
                   <div className="text-center mr-12">
                       <h1 className="text-white">Shop, Celebrate & Customize with us.</h1>
-                      <p className="text-gray-200 px-12 font-bold sm:flex hidden">40% OFF on Accessories</p>
+                      <p className="text-gray-200 px-10 font-bold sm:flex hidden">40% OFF on Accessories</p>
                     </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">

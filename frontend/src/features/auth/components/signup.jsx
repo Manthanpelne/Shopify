@@ -14,10 +14,11 @@ function SignUp() {
 
   const dispatch = useDispatch()
   const user = useSelector(selectLoggedInUser)
+  //console.log(user)
   
   return (
       <div>
-         {!user && <Navigate to="/login" replace={true}></Navigate> }
+         {user?.token && <Navigate to="/login" replace={true}></Navigate> }
       <main className="w-full flex">
         <div className="relative flex-1 hidden items-center justify-center h-screen lg:flex">
           <img

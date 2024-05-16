@@ -24,6 +24,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { Pagination } from "../../common/pagination";
 import { discountedPrice } from "../../../app/constants";
@@ -49,6 +50,8 @@ export const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const status = useSelector(selectProductStatus);
+  const user = useSelector(selectLoggedInUser)
+  //console.log(user)
   const totalItems = useSelector(selectTotalItems);
   const brand = useSelector(selectAllBrands);
   const category = useSelector(selectAllCategory);
@@ -127,6 +130,7 @@ export const ProductList = () => {
   }, []);
 
   return (
+  <>
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="bg-white">
         <div>
@@ -233,6 +237,7 @@ export const ProductList = () => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 
