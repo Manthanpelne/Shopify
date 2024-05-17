@@ -99,7 +99,7 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin: "http://localhost:5173",
+    origin: `${window.location.origin}`,
     preflightContinue: true
   })
 );
@@ -107,7 +107,7 @@ app.use(
 
 
 app.use(async(req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.setHeader("Access-Control-Allow-Origin", `${window.location.origin}`);
   res.header(
     "Access-Control-Allow-Methods",
     "DELETE, POST, GET, PATCH, OPTIONS"

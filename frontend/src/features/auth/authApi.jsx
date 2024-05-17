@@ -12,7 +12,7 @@ export const createUser = (userData) => {
     if(response.ok){
       const data = await response.json();
       resolve({ data });
-      window.location.href = "http://localhost:5173/login"
+      window.location.href = `${window.location.origin}/login`
       toast.success("Signup successfull")
     }else{
       const error = await response.text();
@@ -35,7 +35,7 @@ export const loginUser = (loginInfo) => {
       if (response.ok) {
         const data = await response.json();
         resolve({ data });
-        window.location.href = "http://localhost:5173/"
+        window.location.href = `${window.location.origin}/`
          toast.success("Logged In successfully")
       } else {
         const error = await response.text();
@@ -79,7 +79,7 @@ export const signOut = () => {
       });
       if (response.ok) {
         resolve({ data:"successfully logged out" });
-        window.location.href = "http://localhost:5173/login"
+        window.location.href = `${window.location.origin}/login`
         toast.success("Logged out successfully")
       } else {
         const error = await response.text();
