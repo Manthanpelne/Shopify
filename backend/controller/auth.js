@@ -29,7 +29,9 @@ exports.createUser = async (req, res) => {
             res
               .cookie("jwt", token, {
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-      httpOnly: true
+                path:"/",
+                SameSite: "None",
+                Secure:false
               })
               .status(200)
               .json({ id: user.id, role: user.role });

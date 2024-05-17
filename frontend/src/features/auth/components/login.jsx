@@ -213,7 +213,7 @@ export const Login = () => {
                 <p className="text-red-">{error || error.message}</p>
               )} */}
               <div>
-              <button className="w-full px-4 py-2 text-white font-mediumbg-gradient-to-r from-[#ff80b5] to-[#9089fc] rounded-lg duration-150">
+              <button className="w-full px-4 py-2 text-white font-medium bg-gradient-to-r from-[#ff80b5] to-[#9089fc] rounded-lg duration-150">
                 Login
               </button>
               </div>
