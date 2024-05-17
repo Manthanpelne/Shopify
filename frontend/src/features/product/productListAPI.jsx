@@ -3,7 +3,7 @@ import toast from "react-hot-toast"
 export const fetchAllProducts = () => {
     return new Promise(async(resolve) =>{
       try { 
-        const response = await fetch("https://shopify-pink-xi.vercel.app/product",{
+        const response = await fetch("/product",{
          credentials: "include",
        withCredentials:true
         })
@@ -21,7 +21,7 @@ export const fetchAllProducts = () => {
   export const fetchAllProductsById = (id) => {
     return new Promise(async(resolve) =>{
       try{
-     const response = await fetch("https://shopify-pink-xi.vercel.app/product/"+id,{
+     const response = await fetch("/product/"+id,{
       credentials: "include",
     withCredentials:true
   })
@@ -38,7 +38,7 @@ export const fetchAllProducts = () => {
   
   export const createProduct = (product) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-pink-xi.vercel.app/product/",{
+     const response = await fetch("/product/",{
       method:"POST",
       body:JSON.stringify(product),
       headers:{"content-type":"application/json"},
@@ -62,7 +62,7 @@ export const fetchAllProducts = () => {
   export const updateProduct = (update) => {
     return new Promise(async(resolve) =>{
       try { 
-        const response = await fetch("https://shopify-pink-xi.vercel.app/product/"+update.id,{
+        const response = await fetch("/product/"+update.id,{
          method:"PATCH",
          body:JSON.stringify(update),
          headers:{"content-type":"application/json"},
@@ -112,7 +112,7 @@ export const fetchAllProducts = () => {
     }
     //console.log(queryString)
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-pink-xi.vercel.app/product?"+queryString,{
+     const response = await fetch("/product?"+queryString,{
       credentials: "include",
     withCredentials:true
      })
@@ -127,7 +127,7 @@ export const fetchAllProducts = () => {
 //fetch using category
 export const fetchAllCategories = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-pink-xi.vercel.app/category",{
+   const response = await fetch("/category",{
     credentials: "include",
     withCredentials:true
    })
@@ -140,7 +140,7 @@ export const fetchAllCategories = () => {
 //fetch using category
 export const fetchAllBrands = () => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-pink-xi.vercel.app/brand",{
+   const response = await fetch("/brand",{
     credentials: "include",
     withCredentials:true
    })
