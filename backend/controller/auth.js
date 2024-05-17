@@ -47,6 +47,7 @@ exports.loginUser = async (req, res) => {
   try {
    return res.cookie("jwt", req.user.token, {
         expires: new Date(Date.now() + 365400000),
+        path:"/",
         SameSite: "None",
         Secure
       })
