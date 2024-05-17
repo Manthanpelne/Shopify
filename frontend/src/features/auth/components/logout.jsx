@@ -13,7 +13,7 @@ export const Logout = ()=>{
 
 return (
     <>
-    {!user && <Navigate to="/login" replace={true}></Navigate>}
+    {/* {!user && <Navigate to="/login" replace={true}></Navigate>} */}
     </>
 )
 

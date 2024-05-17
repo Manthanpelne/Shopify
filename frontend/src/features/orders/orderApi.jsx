@@ -11,6 +11,7 @@ export const createOrder = (order) => {
    })
    const data = await response.json()
    resolve({data})
+   toast.success("Order placed Successfully")
 }
   )
 }

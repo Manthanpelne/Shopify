@@ -259,7 +259,7 @@ export const AdminProductDetails=()=> {
             </div>
 
             {/* Sizes */}
-            <div className="mt-10">
+            {/* <div className="mt-10">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-medium text-gray-900">Size</h3>
                 <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -318,7 +318,7 @@ export const AdminProductDetails=()=> {
                   ))}
                 </div>
               </RadioGroup>
-            </div>
+            </div> */}
 
             <button
               type="submit"

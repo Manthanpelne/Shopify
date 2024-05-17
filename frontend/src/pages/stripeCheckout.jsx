@@ -5,6 +5,7 @@ import { selectCurrentOrder } from "../features/orders/orderSlice";
 import { useSelector } from "react-redux";
 import { CheckoutForm } from "./checkoutForm";
 import "../stripe.css";
+import { Link } from "react-router-dom";
 
 
 // Make sure to call loadStripe outside of a component’s render to avoid

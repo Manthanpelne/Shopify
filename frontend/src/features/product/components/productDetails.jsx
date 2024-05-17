@@ -268,7 +268,7 @@ export const ProductDetails=()=> {
             </div>
 
             {/* Sizes */}
-            <div className="mt-10">
+            {/* <div className="mt-10">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-medium text-gray-900">Size</h3>
                 <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -327,14 +327,14 @@ export const ProductDetails=()=> {
                   ))}
                 </div>
               </RadioGroup>
-            </div>
+            </div> */}
 
             <button
               type="submit"
               onClick={handleCart}
-              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-[#ff80b5] to-[#9089fc] px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              Add to bag
+              Add to Cart
             </button>
           </form>
         </div>

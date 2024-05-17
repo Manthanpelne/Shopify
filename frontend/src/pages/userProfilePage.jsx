@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 function UserProfilePage() {
   return (
     <div>
-      <div className='flex justify-between bg-gray-800 mt-2'>
-        <h1 className=" text-white m-4 p-1 text-[14px] mt-3 font-semibold">MY PROFILE</h1>
-        <Link to="/"><h1 className='text-white m-4 p-1 text-[14px] mt-3 font-semibold'>HOME</h1></Link>
+      <div className='flex justify-between bg-gray-100 mt-2'>
+        <h1 className=" text-gray-700 m-4 p-1 text-[14px] mt-3 font-semibold">MY PROFILE</h1>
+        <Link to="/"><h1 className='text-gray-700 m-4 p-1 text-[14px] mt-3 font-semibold'>HOME</h1></Link>
       </div>
         <UserProfile/>
     </div>

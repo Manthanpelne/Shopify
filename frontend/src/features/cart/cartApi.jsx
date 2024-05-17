@@ -12,7 +12,9 @@ export const addToCart = (item) => {
       })
       if(response.ok){
         const data = await response.json()
+        console.log("data:", data)
         resolve({data})
+        //window.location.href = "http://localhost:5173/cart"
         toast.success("Item successfully added to cart")
       }else{
         const error = await response.text()
@@ -69,7 +71,6 @@ export const deleteItemFromCart = (itemId) => {
    if(response.ok){
      const data = await response.json()
      resolve({data:{id:itemId}})
-     toast.success("Item removed successfully")
    }else{
     toast.error("Something went wrong")
    }
@@ -78,10 +79,12 @@ export const deleteItemFromCart = (itemId) => {
 }
 
 export const  resetCart = async() => {
+  return new Promise(async (resolve) => {
   const response = await fetchItemsByUserId()
   const items = response.data
   for(let item of items){
     await deleteItemFromCart(item.id)
   }
   resolve({status:"success"})
+})
 }

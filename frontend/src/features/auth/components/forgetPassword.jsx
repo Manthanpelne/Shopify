@@ -77,7 +77,7 @@ export const ForgetPass = () => {
                   )}
                 </div>
                 <div className="px-4 py-3">
-                  <button className="w-full px-4 py-2 text-white font-medium bg-gray-800 hover:bg-black active:bg-gray-600 rounded-lg duration-150">
+                  <button className="w-full px-4 py-2 text-white font-medium bg-gradient-to-r from-[#ff80b5] to-[#9089fc] rounded-lg duration-150">
                     Send Email
                   </button>
                 </div>

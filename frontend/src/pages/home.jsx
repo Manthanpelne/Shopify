@@ -4,6 +4,7 @@ import { useState } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import { selectLoggedInUser } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import Footer from "../features/common/footer";
 
 export const Home = () => {
   // const user = useSelector(selectLoggedInUser)
@@ -93,7 +94,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <a href="/products" class="inline-block rounded-md border border-transparent bg-zinc-800 px-8 py-3 text-center font-medium text-white hover:bg-gray-700">Shop Collection</a>
+          <a href="/products" class="inline-block rounded-md border border-transparent bg-zinc-800 px-8 py-3 text-center font-medium text-white hover:bg-zinc-900">Shop Collection</a>
         </div>
       </div>
     </div>
@@ -261,7 +262,8 @@ export const Home = () => {
 </div>
 
 
-
+{/* Footer section */}
+<Footer/>
     </>
   );
 };

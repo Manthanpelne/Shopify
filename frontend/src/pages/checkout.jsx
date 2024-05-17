@@ -255,19 +255,18 @@ const handleOrder = (e)=>{
               </button>
               <button
                 type="submit"
-                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-gradient-to-r from-[#ff80b5] to-[#9089fc] px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Save Address
               </button>
             </div>
 
-                <div className="pt-10">
-                  <h3 className="font-semibold">Address</h3>
-                  <p className="text-sm text-gray-700">
-                    Choose from existing addresses
+                <div className="pt-7">
+                  <p className="text-sm font-semibold text-gray-700">
+                    OR choose from existing addresses
                   </p>
 
-                  <ul role="list" className="divide-y divide-gray-300 border-2">
+                  <ul role="list" className="divide-y mt-4 divide-gray-300 border-2">
                     {user.addresses.map((person,index) => (
                       <li
                         key={index}
@@ -429,7 +428,7 @@ const handleOrder = (e)=>{
                       <div className="mt-6">
                         <button
                           onClick={handleOrder}
-                          className="flex items-center w-full justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                          className="flex items-center w-full justify-center rounded-md border border-transparent bg-gradient-to-r from-[#ff80b5] to-[#9089fc] px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Order Now
                         </button>
@@ -439,7 +438,7 @@ const handleOrder = (e)=>{
                           or{' '}
                           <button
                             type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                            className="font-medium text-gray-600 hover:text-gray-800"
                             onClick={() => setOpen(false)}
                           >
                             Continue Shopping

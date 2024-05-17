@@ -18,7 +18,7 @@ function SignUp() {
   
   return (
       <div>
-         {user?.token && <Navigate to="/login" replace={true}></Navigate> }
+         {/* {user?.token && <Navigate to="/login" replace={true}></Navigate> } */}
       <main className="w-full flex">
         <div className="relative flex-1 hidden items-center justify-center h-screen lg:flex">
           <img
@@ -139,7 +139,7 @@ function SignUp() {
                 )}
               </div>
 
-              <button className="w-full px-4 py-2 text-white font-medium bg-gray-800 hover:bg-black active:bg-gray-600 rounded-lg duration-150">
+              <button className="w-full px-4 py-2 text-white font-medium bg-gradient-to-r from-[#ff80b5] to-[#9089fc] rounded-lg duration-150">
                 Create account
               </button>
             </form>

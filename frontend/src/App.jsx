@@ -34,6 +34,7 @@ import StripeCheckout from './pages/stripeCheckout';
 import { Home } from './pages/home';
 import { ProductListPage } from './pages/productListPage';
 import { ResetPassword } from './pages/resetPasswordPage';
+import Error404Page from './pages/404';
 
 
 const router = createBrowserRouter([
@@ -141,14 +142,18 @@ const router = createBrowserRouter([
   },
   {
     path:"/resetPassword",
-    element:<Protected>
+    element:
       <ResetPassword/>
-    </Protected> 
   },
  {
   path:"/",
   element:
   <Home/>
+ },
+ {
+  path:"*",
+  element:
+  <Error404Page/>
  }
 
 ]);

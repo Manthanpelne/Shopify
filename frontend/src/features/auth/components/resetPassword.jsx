@@ -22,7 +22,7 @@ const email = query.get("email")
   } = useForm();
 
   console.log(errors)
-  console.log(email,token)
+  //console.log(email,token)
 
   return (
     <>
@@ -97,11 +97,14 @@ const email = query.get("email")
                   </p>
                 )}
                  {passwordReset && (
+                  <>
                     <p className="text-green-500">Password successfully reset! ✅</p>
+                    <Navigate to="/login"></Navigate>
+                  </>
                   )}
                 </div>
                 <div className="px-4 py-3">
-                  <button className="w-full px-4 py-2 text-white font-medium bg-gray-800 hover:bg-black active:bg-gray-600 rounded-lg duration-150">
+                  <button className="w-full px-4 py-2 text-white font-medium bg-gradient-to-r from-[#ff80b5] to-[#9089fc] rounded-lg duration-150">
                     Reset Password
                   </button>
                 </div>

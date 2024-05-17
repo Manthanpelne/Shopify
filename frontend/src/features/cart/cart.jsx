@@ -11,6 +11,7 @@ import {
 } from "./cartSlice";
 import { discountedPrice } from "../../app/constants";
 import Modal from "../../pages/modal";
+import toast from "react-hot-toast";
 
 // const products = [
 //   {
@@ -46,7 +47,7 @@ export const Cart = () => {
 
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
-  console.log(items)
+  //console.log(items)
   const cartLoaded = useSelector(selectCartLoaded);
 
 
@@ -65,14 +66,15 @@ export const Cart = () => {
 
   const handleDelete = (e, id) => {
     dispatch(deleteItemFromCartAsync(id));
+    toast.success("Item removed successfully")
   };
 
   return (
     <div>
       {items.length && cartLoaded ? (
         //<Navigate to="/products" replace={true}></Navigate>
-      <div className="mx-auto mt-12 max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="border-t bg-white border-gray-200 px-4 py-6 sm:px-6">
+      <div className="mx-auto mt-12 max-w-5xl px-4 sm:px-6 lg:px-8 border border-gray-300">
+        <div className=" bg-white px-4 py-6 sm:px-6">
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
               {items.map((product) => (
@@ -162,7 +164,7 @@ export const Cart = () => {
           </p>
           <div className="mt-6">
             <Link to="/checkout">
-              <a className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+              <a className="flex items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-[#ff80b5] to-[#9089fc] px-6 py-3 text-base font-medium text-white shadow-sm">
                 Checkout
               </a>
             </Link>
@@ -170,19 +172,29 @@ export const Cart = () => {
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
               or{" "}
+              <Link to="/products">
               <button
                 type="button"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className="font-medium text-gray-600 hover:text-gray-800"
                 onClick={() => setOpen(false)}
               >
                 Continue Shopping
                 <span aria-hidden="true"> &rarr;</span>
               </button>
+              </Link>
             </p>
           </div>
         </div>
       </div>
-      ) : <h1>cart empty</h1> }
+      ) :
+      <>
+      <div className="lg:w-[400px] lg:h-auto border m-auto my-12">
+        <img src="https://cdn-icons-png.flaticon.com/512/2424/2424106.png" alt="" />
+      <h1 className="text-center text-xl font-bold">Your cart is empty</h1>
+        <h1 className="text-center">Bag feels light, Add something! 🛒 </h1>
+      </div>
+      </>
+      }
     </div>
   );
 };
