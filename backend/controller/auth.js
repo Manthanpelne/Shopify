@@ -49,7 +49,7 @@ exports.loginUser = async (req, res) => {
         expires: new Date(Date.now() + 365400000),
         path:"/",
         SameSite: "None",
-        Secure
+        Secure:false
       })
       .status(200)
       .json({ token: req.user.token, id: req.user.id, role: req.user.role });
