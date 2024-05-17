@@ -94,7 +94,7 @@ app.post(
 
 app.use(express.json());
 app.use(cookies());
-// app.use(express.static(path.resolve(__dirname, 'dist')));
+app.use(express.static(path.resolve(__dirname, 'dist')));
 // //app.use(express.static("dist"));
 app.use(
   cors({
@@ -104,12 +104,6 @@ app.use(
   })
 );
 
-// app.use((req,res,next)=>{
-//   if(req.method==="OPTIONS"||req.method==="POST"||req.method==="PATCH"||req.method==="DELETE"){
-//     res.status(200).send({"msg":"success"})
-//   }
-//   next();
-// })
 
 
 app.use(async(req, res, next) => {
