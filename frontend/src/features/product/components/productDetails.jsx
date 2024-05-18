@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
-import { fetchAllProductsByIdAsync, selectProductById } from '../productListSlice'
+import { fetchAllProductsByIdAsync, selectProductById, selectProductStatus } from '../productListSlice'
 import {useSelector, useDispatch} from "react-redux"
 import { useParams } from 'react-router-dom'
 import { addToCartAsync, selectItems } from '../../cart/cartSlice'
@@ -9,6 +9,7 @@ import {selectLoggedInUser} from "../../auth/authSlice"
 import { discountedPrice } from '../../../app/constants'
 import { selectUserInfo } from '../../user/userSlice'
 import toast from 'react-hot-toast'
+import { RotatingLines } from 'react-loader-spinner'
 
 // const pro = {
 //   name: 'Basic Tee 6-Pack',
@@ -95,6 +96,7 @@ export const ProductDetails=()=> {
   const dispatch = useDispatch()
   const params = useParams()
   const items = useSelector(selectItems)
+  const status = useSelector(selectProductStatus)
 // console.log(params.id)
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
@@ -168,6 +170,19 @@ export const ProductDetails=()=> {
       </nav>
 
       {/* Image gallery */}
+      {status === "loading" ? (
+              <RotatingLines
+                visible={true}
+                height="96"
+                width="96"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : null}
       {product && product.map((item)=>(
         <div key={item.id} className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
         <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">

@@ -3,7 +3,7 @@ import toast from "react-hot-toast"
 export const addToCart = (item) => {
   return new Promise(async(resolve) =>{
     try {
-      const response = await fetch("https://shopify-seven-dun.vercel.app/cart",{
+      const response = await fetch("https://shopify-ten-pi.vercel.app/cart",{
        method:"POST",
        body:JSON.stringify(item),
        headers:{"content-type":"application/json"},
@@ -31,7 +31,7 @@ export const addToCart = (item) => {
 export const fetchItemsByUserId = () => {
   return new Promise(async(resolve) =>{
     try {  
-      const response = await fetch("https://shopify-seven-dun.vercel.app/cart",{
+      const response = await fetch("https://shopify-ten-pi.vercel.app/cart",{
         credentials: "include",
     withCredentials:true
       })
@@ -46,7 +46,7 @@ export const fetchItemsByUserId = () => {
 
 export const updateCart = (update) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-seven-dun.vercel.app/cart/"+update.id,{
+   const response = await fetch("https://shopify-ten-pi.vercel.app/cart/"+update.id,{
     method:"PATCH",
     body:JSON.stringify(update),
     headers:{"content-type":"application/json"},
@@ -62,7 +62,7 @@ export const updateCart = (update) => {
 
 export const deleteItemFromCart = (itemId) => {
   return new Promise(async(resolve) =>{
-   const response = await fetch("https://shopify-seven-dun.vercel.app/cart/"+itemId,{
+   const response = await fetch("https://shopify-ten-pi.vercel.app/cart/"+itemId,{
     method:"DELETE",
     headers:{"content-type":"application/json"},
     credentials: "include",

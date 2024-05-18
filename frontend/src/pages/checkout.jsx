@@ -262,7 +262,7 @@ const handleOrder = (e)=>{
             </div>
 
                 <div className="pt-7">
-                  <p className="text-sm font-semibold text-gray-700">
+                  <p className="text-sm font-bold text-gray-700">
                     OR choose from existing addresses
                   </p>
 

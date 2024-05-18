@@ -1,6 +1,8 @@
+import toast from "react-hot-toast"
+
 export const fetchLoggedInUserOrders = () => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-seven-dun.vercel.app/orders/own/",{
+     const response = await fetch("https://shopify-ten-pi.vercel.app/orders/own/",{
       credentials: "include",
     withCredentials:true
      })
@@ -15,7 +17,7 @@ export const fetchLoggedInUserOrders = () => {
   export const fetchLoggedInUser = () => {
     return new Promise(async(resolve) =>{
       try {
-        const response = await fetch("https://shopify-seven-dun.vercel.app/user/own",{
+        const response = await fetch("https://shopify-ten-pi.vercel.app/user/own",{
           credentials: "include",
     withCredentials:true
         })
@@ -31,15 +33,20 @@ export const fetchLoggedInUserOrders = () => {
 
   export const updateUser = (update) => {
     return new Promise(async(resolve) =>{
-     const response = await fetch("https://shopify-seven-dun.vercel.app/user/"+update.id,{
+     const response = await fetch("https://shopify-ten-pi.vercel.app/user/"+update.id,{
       method:"PATCH",
       body:JSON.stringify(update),
       headers:{"content-type":"application/json"},
       credentials: "include",
     withCredentials:true
      })
-     const data = await response.json()
-     resolve({data})
-}
-    )
+     if(response.ok){
+      const data = await response.json()
+      resolve({data})
+      toast.success("Updated successfully")
+    }else{
+      toast.error("Something went wrong, Retry again!")
+    }
+ }
+   )
   }

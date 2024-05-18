@@ -7,6 +7,7 @@ useElements
 } from "@stripe/react-stripe-js";
 import { useSelector } from 'react-redux';
 import { selectCurrentOrder } from "../features/orders/orderSlice";
+import toast from "react-hot-toast";
 
 
 
@@ -64,9 +65,10 @@ export const CheckoutForm =()=>{
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/OrderSuccess/${currentOrder.id}`,
+        return_url: `https://enchanting-kataifi-d65b50.netlify.app/OrderSuccess/${currentOrder.id}`,
       },
     });
+    toast.success("Order placed Successfully")
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

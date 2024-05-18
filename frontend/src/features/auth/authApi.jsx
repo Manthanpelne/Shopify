@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 export const createUser = (userData) => {
   return new Promise(async (resolve) => {
-    const response = await fetch("https://shopify-seven-dun.vercel.app/auth/signup", {
+    const response = await fetch("https://shopify-ten-pi.vercel.app/auth/signup", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "content-type": "application/json" },
@@ -25,7 +25,7 @@ export const createUser = (userData) => {
 export const loginUser = (loginInfo) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch("https://shopify-seven-dun.vercel.app/auth/login", {
+      const response = await fetch("https://shopify-ten-pi.vercel.app/auth/login", {
         method: "POST",
         body: JSON.stringify(loginInfo),
         headers: { "content-type": "application/json" },
@@ -53,7 +53,7 @@ export const loginUser = (loginInfo) => {
 export const checkAuth = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch("https://shopify-seven-dun.vercel.app/auth/check", {
+      const response = await fetch("https://shopify-ten-pi.vercel.app/auth/check", {
         credentials: "include",
         withCredentials: true,
       });
@@ -73,13 +73,13 @@ export const checkAuth = () => {
 export const signOut = () => {
   return new Promise(async (resolve) => {
     try {
-      const response = await fetch("https://shopify-seven-dun.vercel.app/auth/logout", {
+      const response = await fetch("https://shopify-ten-pi.vercel.app/auth/logout", {
         credentials: "include",
         withCredentials: true,
       });
       if (response.ok) {
         resolve({ data:"successfully logged out" });
-        window.location.href = `${window.location.origin}/login`
+        //window.location.href = `${window.location.origin}/login`
         toast.success("Logged out successfully")
       } else {
         const error = await response.text();
@@ -97,7 +97,7 @@ export const resetPasswordRequest = (email) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        "https://shopify-seven-dun.vercel.app/auth/reset-password-request",
+        "https://shopify-ten-pi.vercel.app/auth/reset-password-request",
         {
           method: "POST",
           body: JSON.stringify({ email }),
@@ -127,7 +127,7 @@ export const resetPasswordApi = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        "https://shopify-seven-dun.vercel.app/auth/reset-password",
+        "https://shopify-ten-pi.vercel.app/auth/reset-password",
         {
           method: "POST",
           body: JSON.stringify(data),

@@ -99,50 +99,6 @@ import React from 'react'
               { name: "Pegasus", link: "/" },
             ],
           },
-          {
-            Head: "Shop Icons",
-            sublink: [
-              { name: "Air Force 1", link: "/" },
-              { name: "Air Jordan 1", link: "/" },
-              { name: "Air Max", link: "/" },
-              { name: "Blazer", link: "/" },
-              { name: "Cortez", link: "/" },
-              { name: "Pegasus", link: "/" },
-            ],
-          },
-          {
-            Head: "Men",
-            sublink: [
-              { name: "Air Force 1", link: "/" },
-              { name: "Air Jordan 1", link: "/" },
-              { name: "Air Max", link: "/" },
-              { name: "Blazer", link: "/" },
-              { name: "Cortez", link: "/" },
-              { name: "Pegasus", link: "/" },
-            ],
-          },
-          {
-            Head: "Women",
-            sublink: [
-              { name: "Air Force 1", link: "/" },
-              { name: "Air Jordan 1", link: "/" },
-              { name: "Air Max", link: "/" },
-              { name: "Blazer", link: "/" },
-              { name: "Cortez", link: "/" },
-              { name: "Pegasus", link: "/" },
-            ],
-          },
-          {
-            Head: "Kid's",
-            sublink: [
-              { name: "Air Force 1", link: "/" },
-              { name: "Air Jordan 1", link: "/" },
-              { name: "Air Max", link: "/" },
-              { name: "Blazer", link: "/" },
-              { name: "Cortez", link: "/" },
-              { name: "Pegasus", link: "/" },
-            ],
-          },
         ],
        },
         { name: "Women",
@@ -172,39 +128,6 @@ import React from 'react'
           },
           {
             Head: "Women",
-            sublink: [
-              { name: "Air Force 1", link: "/" },
-              { name: "Air Jordan 1", link: "/" },
-              { name: "Air Max", link: "/" },
-              { name: "Blazer", link: "/" },
-              { name: "Cortez", link: "/" },
-              { name: "Pegasus", link: "/" },
-            ],
-          },
-          {
-            Head: "Kid's",
-            sublink: [
-              { name: "Air Force 1", link: "/" },
-              { name: "Air Jordan 1", link: "/" },
-              { name: "Air Max", link: "/" },
-              { name: "Blazer", link: "/" },
-              { name: "Cortez", link: "/" },
-              { name: "Pegasus", link: "/" },
-            ],
-          },
-          {
-            Head: "Shop Icons",
-            sublink: [
-              { name: "Air Force 1", link: "/" },
-              { name: "Air Jordan 1", link: "/" },
-              { name: "Air Max", link: "/" },
-              { name: "Blazer", link: "/" },
-              { name: "Cortez", link: "/" },
-              { name: "Pegasus", link: "/" },
-            ],
-          },
-          {
-            Head: "Men",
             sublink: [
               { name: "Air Force 1", link: "/" },
               { name: "Air Jordan 1", link: "/" },
