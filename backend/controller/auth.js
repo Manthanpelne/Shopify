@@ -29,7 +29,10 @@ exports.createUser = async (req, res) => {
             res
               .cookie("jwt", token, {
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-      httpOnly: true
+                secure: true,
+                httpOnly: true,
+                sameSite: 'none',
+                path: '/'
               })
               .status(200)
               .json({ id: user.id, role: user.role });
@@ -47,9 +50,10 @@ exports.loginUser = async (req, res) => {
   try {
    return res.cookie("jwt", req.user.token, {
         expires: new Date(Date.now() + 365400000),
-        path:"/",
-        SameSite: "None",
-        Secure:false
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none',
+        path: '/'
       })
       .status(200)
       .json({ token: req.user.token, id: req.user.id, role: req.user.role });
@@ -64,9 +68,10 @@ exports.logout = async (req, res) => {
   try {
    return res.cookie("jwt", null, {
         expires: new Date(Date.now()),
-        path:"/",
-        SameSite: "None",
-        Secure:false
+        secure: true,
+      httpOnly: true,
+      sameSite: 'none',
+      path: '/'
       })
       .sendStatus(200)
   } catch (error) {
