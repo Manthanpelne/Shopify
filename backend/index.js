@@ -99,7 +99,7 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin: "https://6647b7e584ebc72abed9f3b9--enchanting-kataifi-d65b50.netlify.app",
+    origin: "https://enchanting-kataifi-d65b50.netlify.app",
     preflightContinue: true
   })
 );
@@ -107,7 +107,7 @@ app.use(
 
 
 app.use(async(req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://6647b7e584ebc72abed9f3b9--enchanting-kataifi-d65b50.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", "https://enchanting-kataifi-d65b50.netlify.app");
   res.header(
     "Access-Control-Allow-Methods",
     "DELETE, POST, GET, PATCH, OPTIONS"
