@@ -7,6 +7,8 @@ export const Logout = ()=>{
     const dispatch = useDispatch()
     const user = useSelector(selectLoggedInUser)
 
+    
+
     useEffect(()=>{
        dispatch(signOutAsync()) 
     })

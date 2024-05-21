@@ -1,5 +1,6 @@
 import toast, { Toaster } from 'react-hot-toast';
 import { Navigate } from 'react-router-dom';
+import { RemoveCookie } from '../common/removeCookie';
 
 
 export const createUser = (userData) => {
@@ -78,6 +79,7 @@ export const signOut = () => {
         withCredentials: true,
       });
       if (response.ok) {
+        RemoveCookie("jwt")
         resolve({ data:"successfully logged out" });
         //window.location.href = `${window.location.origin}/login`
         toast.success("Logged out successfully")
