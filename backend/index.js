@@ -99,7 +99,7 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    origin: "https://enchanting-kataifi-d65b50.netlify.app",
+    origin: "https://zingy-cajeta-563e6d.netlify.app/",
     preflightContinue: true
   })
 );
@@ -107,7 +107,7 @@ app.use(
 
 
 app.use(async(req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://enchanting-kataifi-d65b50.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", "https://zingy-cajeta-563e6d.netlify.app");
   res.header(
     "Access-Control-Allow-Methods",
     "DELETE, POST, GET, PATCH, OPTIONS"
