@@ -3,9 +3,10 @@
 
 *Shopify E-commerce is a MERN stack web-based application that allows customers to buy products online seamlessly. The application's backend is responsible for creating APIs and connecting the server with database whereas the role of frontend is to interact with customers or clients smoothly*
 
-*note: - To login as Admin, enter the credentials Email-jonny@gmail.com password-Jonny@123
-       - Enter your gmail to sign in if you want to test forgot password funtionality
-       - for card payment, enter Card No. 4000003560000008 as it is authenticated Indian Visa card from stripe*
+# Note 
+- To login as Admin, enter the credentials Email- jonny@gmail.com & password- Jonny@123
+- Enter your gmail to sign in if you want to test forgot password funtionality
+- For card payment, enter Card No. 4000003560000008 as it is authenticated Indian Visa card from stripe*
 
 run the command 
 - run command npm i when you clone the repo
